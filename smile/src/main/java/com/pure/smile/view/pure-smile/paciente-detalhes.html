@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Smile — Detalhes do Paciente</title>
+<script>(function(){var t=localStorage.getItem('ps-theme'); if(t) document.documentElement.setAttribute('data-theme', t);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .profile-head{ display:flex; align-items:center; gap:var(--sp-5); padding:var(--sp-6); }
+  .profile-head img{ width:84px; height:84px; border-radius:50%; object-fit:cover; border:3px solid var(--surface); box-shadow:var(--shadow-md); }
+  .profile-head h2{ font-size:var(--fs-xl); }
+  .profile-head .meta-row{ display:flex; gap:var(--sp-5); margin-top:6px; flex-wrap:wrap; }
+  .profile-head .meta-row span{ font-size:12.5px; color:var(--text-2); display:flex; align-items:center; gap:5px; }
+
+  .detail-tabs{ display:flex; gap:2px; border-bottom:1px solid var(--border); padding:0 var(--sp-6); }
+  .detail-tab{ padding:12px 18px; font-size:var(--fs-sm); font-weight:600; color:var(--text-2); cursor:pointer; border-bottom:2px solid transparent; }
+  .detail-tab.is-active{ color:var(--primary); border-color:var(--primary); }
+  .detail-panel{ display:none; padding:var(--sp-6); }
+  .detail-panel.is-active{ display:block; }
+
+  .info-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:var(--sp-4); }
+  .info-item{ padding:var(--sp-4); border-radius:var(--r-md); background:var(--card-alt); }
+  .info-item label{ display:block; font-size:11px; color:var(--text-2); margin-bottom:4px; }
+  .info-item strong{ font-size:var(--fs-sm); }
+
+  .timeline-item{ display:flex; gap:var(--sp-4); padding-bottom:var(--sp-5); position:relative; }
+  .timeline-item::before{ content:''; position:absolute; left:15px; top:32px; bottom:-8px; width:1.5px; background:var(--border); }
+  .timeline-item:last-child::before{ display:none; }
+  .timeline-dot{ width:32px; height:32px; border-radius:50%; background:var(--primary-soft); color:var(--primary); display:flex; align-items:center; justify-content:center; flex:none; font-size:15px; z-index:1; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="ps-app-shell">
+  <aside class="sidebar" id="ps-sidebar"></aside>
+  <div>
+    <header class="topbar" id="ps-topbar"></header>
+    <main class="content">
+      <a href="pacientes.html" class="btn btn-ghost btn-sm mb-4"><i class="ri-arrow-left-line"></i> Voltar para pacientes</a>
+
+      <div class="card mb-6">
+        <div class="profile-head" id="profileHead"></div>
+        <div class="detail-tabs">
+          <div class="detail-tab is-active" data-tab="dados">Dados pessoais</div>
+          <div class="detail-tab" data-tab="consultas">Histórico de consultas</div>
+          <div class="detail-tab" data-tab="procedimentos">Histórico de procedimentos</div>
+          <div class="detail-tab" data-tab="financeiro">Histórico financeiro</div>
+        </div>
+
+        <div class="detail-panel is-active" data-panel="dados" id="panelDados"></div>
+        <div class="detail-panel" data-panel="consultas" id="panelConsultas"></div>
+        <div class="detail-panel" data-panel="procedimentos" id="panelProcedimentos"></div>
+        <div class="detail-panel" data-panel="financeiro" id="panelFinanceiro"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="js/mock-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/paciente-detalhes.js"></script>
+</body>
+</html>

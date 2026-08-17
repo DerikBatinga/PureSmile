@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Smile — Entrar</title>
+<script>
+  (function(){ var t = localStorage.getItem('ps-theme'); if(t) document.documentElement.setAttribute('data-theme', t); })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body{ overflow:hidden; }
+  .login-shell{ display:grid; grid-template-columns: 1.05fr 1fr; min-height:100vh; }
+
+  .login-brand{
+    position:relative; overflow:hidden;
+    background: radial-gradient(1200px 600px at 15% 10%, rgba(94,129,172,.35), transparent 60%),
+                linear-gradient(160deg, var(--primary) 0%, #22314A 100%);
+    color:#fff; display:flex; flex-direction:column; justify-content:space-between;
+    padding:var(--sp-9) var(--sp-9);
+  }
+  .login-brand__deco{ position:absolute; inset:0; opacity:.5; pointer-events:none; }
+  .login-brand__deco svg{ position:absolute; }
+  .login-brand__top{ display:flex; align-items:center; gap:var(--sp-3); position:relative; z-index:2; }
+  .login-brand__mark{
+    width:46px; height:46px; border-radius:var(--r-md); background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25); display:flex; align-items:center; justify-content:center; font-size:22px;
+    backdrop-filter:blur(6px);
+  }
+  .login-brand__top strong{ font-family:var(--font-display); font-size:1.15rem; letter-spacing:-.02em; }
+  .login-brand__top span{ display:block; font-size:11px; color:rgba(255,255,255,.65); }
+
+  .login-brand__mid{ position:relative; z-index:2; max-width:460px; }
+  .login-brand__mid .lord-wrap{ width:180px; height:180px; margin-bottom:var(--sp-6); }
+  .login-brand__mid h1{ color:#fff; font-size:2.4rem; line-height:1.15; font-weight:700; margin-bottom:var(--sp-4); }
+  .login-brand__mid p{ color:rgba(255,255,255,.75); font-size:var(--fs-md); line-height:1.6; }
+
+  .login-brand__stats{ position:relative; z-index:2; display:flex; gap:var(--sp-8); }
+  .login-brand__stats div strong{ display:block; font-family:var(--font-display); font-size:1.5rem; font-weight:700; }
+  .login-brand__stats div span{ font-size:12px; color:rgba(255,255,255,.65); }
+
+  .login-form-side{
+    display:flex; align-items:center; justify-content:center; padding:var(--sp-7);
+    background:var(--bg); position:relative;
+  }
+  .login-form-side .theme-toggle-standalone{
+    position:absolute; top:var(--sp-6); right:var(--sp-6);
+  }
+  .login-card{ width:100%; max-width:400px; }
+  .login-card__eyebrow{ font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:var(--sp-2); }
+  .login-card h2{ font-size:var(--fs-2xl); font-weight:700; margin-bottom:var(--sp-2); }
+  .login-card__sub{ color:var(--text-2); font-size:var(--fs-sm); margin-bottom:var(--sp-7); }
+
+  .role-picker{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:var(--sp-6); }
+  .role-chip{
+    display:flex; flex-direction:column; align-items:center; gap:6px; padding:12px 6px;
+    border:1.5px solid var(--border); border-radius:var(--r-md); cursor:pointer; background:var(--card);
+    font-size:10.5px; font-weight:600; color:var(--text-2); text-align:center;
+    transition:all var(--t-fast) var(--ease);
+  }
+  .role-chip i{ font-size:19px; }
+  .role-chip:hover{ border-color:var(--accent); }
+  .role-chip.is-active{ border-color:var(--primary); background:var(--primary-soft); color:var(--primary); }
+
+  .login-options{ display:flex; align-items:center; justify-content:space-between; margin:-4px 0 var(--sp-6); }
+  .login-options a{ font-size:var(--fs-xs); color:var(--accent); font-weight:600; }
+  .login-options a:hover{ text-decoration:underline; }
+
+  .login-footer-note{ margin-top:var(--sp-7); text-align:center; font-size:11px; color:var(--text-3); }
+
+  @media(max-width:940px){
+    .login-shell{ grid-template-columns:1fr; }
+    .login-brand{ display:none; }
+  }
+</style>
+</head>
+<body data-public-page>
+<div class="login-shell">
+
+  <!-- LADO ESQUERDO — BRANDING -->
+  <aside class="login-brand" id="loginBrand">
+    <div class="login-brand__deco" aria-hidden="true">
+      <svg width="520" height="520" viewBox="0 0 520 520" style="top:-120px; right:-140px;"><circle cx="260" cy="260" r="260" fill="rgba(255,255,255,.05)"/></svg>
+      <svg width="360" height="360" viewBox="0 0 360 360" style="bottom:-100px; left:-80px;"><circle cx="180" cy="180" r="180" fill="rgba(255,255,255,.05)"/></svg>
+    </div>
+
+    <div class="login-brand__top">
+      <div class="login-brand__mark"><i class="ri-shining-2-fill"></i></div>
+      <div>
+        <strong>PURE SMILE</strong>
+        <span>Gestão Odontológica Premium</span>
+      </div>
+    </div>
+
+    <div class="login-brand__mid">
+      <div class="lord-wrap" id="lordLoginWrap"></div>
+      <h1>Seu sorriso,<br>nossa prioridade.</h1>
+      <p>Centralize pacientes, agenda, procedimentos e pagamentos em um só lugar — com a organização que sua clínica merece.</p>
+    </div>
+
+    <div class="login-brand__stats">
+      <div><strong>+12 mil</strong><span>Pacientes atendidos</span></div>
+      <div><strong>98%</strong><span>Satisfação</span></div>
+      <div><strong>24/7</strong><span>Acesso ao histórico</span></div>
+    </div>
+  </aside>
+
+  <!-- LADO DIREITO — FORMULÁRIO -->
+  <section class="login-form-side">
+    <button class="icon-btn theme-toggle theme-toggle-standalone" data-action="toggle-theme" data-tooltip="Alternar tema">
+      <i data-theme-icon class="ri-moon-line"></i>
+    </button>
+
+    <div class="login-card" id="loginCard">
+      <div class="login-card__eyebrow">Bem-vindo de volta</div>
+      <h2>Acesse sua conta</h2>
+      <p class="login-card__sub">Selecione seu perfil de demonstração e entre no sistema.</p>
+
+      <div class="role-picker" id="rolePicker">
+        <div class="role-chip is-active" data-role="dentista"><i class="ri-stethoscope-line"></i>Dentista</div>
+        <div class="role-chip" data-role="funcionario"><i class="ri-user-star-line"></i>Secretaria</div>
+        <div class="role-chip" data-role="admin"><i class="ri-shield-user-line"></i>Admin</div>
+        <div class="role-chip" data-role="paciente"><i class="ri-heart-pulse-line"></i>Paciente</div>
+      </div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="email">E-mail</label>
+          <div class="input-icon">
+            <i class="ri-mail-line"></i>
+            <input class="input" type="email" id="email" placeholder="voce@puresmile.com" value="camila.ferraz@puresmile.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <div class="input-icon">
+            <i class="ri-lock-2-line"></i>
+            <input class="input" type="password" id="senha" placeholder="••••••••" value="123456" required>
+            <i class="ri-eye-line toggle-visibility" id="togglePass" style="cursor:pointer;"></i>
+          </div>
+        </div>
+
+        <div class="login-options">
+          <label class="checkbox-row"><input type="checkbox" checked> Lembrar de mim</label>
+          <a href="#" id="forgotLink">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit" class="btn btn-accent btn-block" id="loginBtn">
+          <i class="ri-login-circle-line"></i> Entrar
+        </button>
+      </form>
+
+      <p class="login-footer-note">Pure Smile © 2026 — Projeto acadêmico de Desenvolvimento de Sistemas</p>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/toast.js"></script>
+<script>
+  PSTheme.init();
+
+  // Lordicon: sorriso/dentes animado (usa player oficial via CDN)
+  document.getElementById('lordLoginWrap').innerHTML =
+    '<lord-icon src="https://cdn.lordicon.com/lznlxwtc.json" trigger="loop" delay="1500" colors="primary:#ffffff,secondary:#5e81ac" style="width:180px;height:180px"></lord-icon>';
+
+  let selectedRole = 'dentista';
+  document.querySelectorAll('.role-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.role-chip').forEach(c=>c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      selectedRole = chip.dataset.role;
+      const emailMap = {
+        dentista:'camila.ferraz@puresmile.com',
+        funcionario:'ana.lima@puresmile.com',
+        admin:'rodrigo.fialho@puresmile.com',
+        paciente:'marina.alves@gmail.com',
+      };
+      document.getElementById('email').value = emailMap[selectedRole];
+    });
+  });
+
+  document.getElementById('togglePass').addEventListener('click', function(){
+    const input = document.getElementById('senha');
+    const isPass = input.type === 'password';
+    input.type = isPass ? 'text' : 'password';
+    this.className = isPass ? 'ri-eye-off-line toggle-visibility' : 'ri-eye-line toggle-visibility';
+  });
+
+  document.getElementById('forgotLink').addEventListener('click', (e)=>{
+    e.preventDefault();
+    PSToast('Um link de redefinição seria enviado para o seu e-mail.', 'info', 'Recuperação de senha');
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ri-loader-4-line" style="animation:spin .7s linear infinite;"></i> Entrando...';
+    localStorage.setItem('ps-role', selectedRole);
+    setTimeout(()=>{ window.location.href = 'dashboard.html'; }, 700);
+  });
+
+  // Animação de entrada
+  window.addEventListener('load', ()=>{
+    gsap.from('#loginBrand .login-brand__top', { opacity:0, y:-16, duration:.6, ease:'power2.out' });
+    gsap.from('#loginBrand .login-brand__mid', { opacity:0, y:24, duration:.7, delay:.15, ease:'power2.out' });
+    gsap.from('#loginBrand .login-brand__stats > div', { opacity:0, y:16, stagger:.1, duration:.5, delay:.4, ease:'power2.out' });
+    gsap.from('#loginCard', { opacity:0, x:24, duration:.6, delay:.2, ease:'power2.out' });
+    gsap.from('#loginCard .role-chip', { opacity:0, y:10, stagger:.06, duration:.4, delay:.35, ease:'power2.out' });
+  });
+</script>
+<style>
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+</style>
+</body>
+</html>

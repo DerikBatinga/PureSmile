@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Smile — Agenda</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/shell.css">
+    <link rel="stylesheet" href="../css/agenda.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        const tema = localStorage.getItem('ps-tema')
+        document.documentElement.setAttribute('data-theme', tema || 'dark')
+    </script>
+</head>
+<body>
+<div class="app-shell" id="ps-app-shell">
+    <aside class="sidebar" id="ps-sidebar"></aside>
+    <div>
+        <header class="topbar" id="ps-topbar"></header>
+        <main class="content">
+            <!-- Toolbar -->
+            <div class="agenda-toolbar">
+                <div class="agenda-toolbar__left">
+                    <div class="agenda-view-switch">
+                        <button class="is-active" data-view="week">Semanal</button>
+                        <button data-view="day">Diário</button>
+                    </div>
+                    <div class="agenda-legend">
+                        <span><i class="dot--confirmada"></i> Confirmada</span>
+                        <span><i class="dot--em-andamento"></i> Em andamento</span>
+                        <span><i class="dot--concluida"></i> Concluída</span>
+                        <span><i class="dot--cancelada"></i> Cancelada</span>
+                    </div>
+                </div>
+                <button class="btn btn-accent" id="btnNewAppointment">
+                    <i class="ri-calendar-event-line"></i> Agendar consulta
+                </button>
+            </div>
+
+            <!-- Grade de horários -->
+            <div class="calendar">
+                <!-- Cabeçalho: dia vazio + 7 dias -->
+                <div class="cal-head"></div>
+                <div class="cal-head is-today"><strong>Seg</strong><span>Hoje</span></div>
+                <div class="cal-head"><strong>Ter</strong><span>Dia 2</span></div>
+                <div class="cal-head"><strong>Qua</strong><span>Dia 3</span></div>
+                <div class="cal-head"><strong>Qui</strong><span>Dia 4</span></div>
+                <div class="cal-head"><strong>Sex</strong><span>Dia 5</span></div>
+                <div class="cal-head"><strong>Sáb</strong><span>Dia 6</span></div>
+                <div class="cal-head"><strong>Dom</strong><span>Dia 7</span></div>
+
+                <!-- Coluna de horários -->
+                <div class="cal-time-col">
+                    <div class="cal-time-slot">7:00</div>
+                    <div class="cal-time-slot">8:00</div>
+                    <div class="cal-time-slot">9:00</div>
+                    <div class="cal-time-slot">10:00</div>
+                    <div class="cal-time-slot">11:00</div>
+                    <div class="cal-time-slot">12:00</div>
+                    <div class="cal-time-slot">13:00</div>
+                    <div class="cal-time-slot">14:00</div>
+                    <div class="cal-time-slot">15:00</div>
+                    <div class="cal-time-slot">16:00</div>
+                    <div class="cal-time-slot">17:00</div>
+                    <div class="cal-time-slot">18:00</div>
+                </div>
+
+                <!-- Segunda -->
+                <div class="cal-day-col cal-day-col--full">
+                    <div class="cal-event st-confirmada t-76 h-72">
+                        Marina Souza<span>08:00 · Manutenção Ortodôntica</span>
+                    </div>
+                    <div class="cal-event st-em-andamento t-190 h-110">
+                        João Pedro Martins<span>09:30 · Implante — Avaliação</span>
+                    </div>
+                    <div class="cal-event st-confirmada t-304 h-72">
+                        Sofia Nascimento<span>11:00 · Canal</span>
+                    </div>
+                </div>
+
+                <!-- Terça -->
+                <div class="cal-day-col cal-day-col--full">
+                    <div class="cal-event st-confirmada t-532 h-53">
+                        Gabriel Teixeira<span>14:00 · Limpeza</span>
+                    </div>
+                    <div class="cal-event st-cancelada t-608 h-34">
+                        Isabela Cruz<span>15:00 · Avaliação</span>
+                    </div>
+                </div>
+
+                <!-- Quarta -->
+                <div class="cal-day-col cal-day-col--full">
+                    <div class="cal-event st-concluida t-228 h-72">
+                        Lucas Andrade<span>10:00 · Extração</span>
+                    </div>
+                    <div class="cal-event st-confirmada t-722 h-72">
+                        Fernando Melo<span>16:30 · Implante</span>
+                    </div>
+                </div>
+
+                <!-- Quinta -->
+                <div class="cal-day-col cal-day-col--full">
+                    <div class="cal-event st-confirmada t-152 h-53">
+                        Marina Souza<span>09:00 · Manutenção Ortodôntica</span>
+                    </div>
+                </div>
+
+                <!-- Sexta -->
+                <div class="cal-day-col cal-day-col--full">
+                    <div class="cal-event st-confirmada t-456 h-72">
+                        Helena Duarte<span>13:00 · Canal</span>
+                    </div>
+                </div>
+
+                <!-- Sábado -->
+                <div class="cal-day-col cal-day-col--full"></div>
+
+                <!-- Domingo -->
+                <div class="cal-day-col cal-day-col--full"></div>
+            </div>
+
+            <p class="agenda-hint">
+                <i class="ri-drag-move-2-line"></i>
+                Arraste um card para outro dia para reagendar (demonstração visual).
+            </p>
+        </main>
+    </div>
+</div>
+<script src="../JS/main.js"></script>
+<script src="../JS/layout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Smile — Pagamentos</title>
+<script>(function(){var t=localStorage.getItem('ps-theme'); if(t) document.documentElement.setAttribute('data-theme', t);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .pay-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-5); margin-bottom:var(--sp-6); }
+  @media(max-width:1180px){ .pay-grid{ grid-template-columns:repeat(2,1fr);} }
+  .pay-main{ display:grid; grid-template-columns:1.6fr 1fr; gap:var(--sp-5); align-items:start; }
+  @media(max-width:1080px){ .pay-main{ grid-template-columns:1fr; } }
+  .method-row{ display:flex; align-items:center; gap:var(--sp-3); padding:var(--sp-3) 0; border-bottom:1px solid var(--border); }
+  .method-row:last-child{ border-bottom:none; }
+  .method-row i{ font-size:20px; color:var(--accent); }
+  .method-bar-bg{ height:6px; border-radius:99px; background:var(--card-alt); flex:1; overflow:hidden; }
+  .method-bar-fill{ height:100%; background:var(--accent); border-radius:99px; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="ps-app-shell">
+  <aside class="sidebar" id="ps-sidebar"></aside>
+  <div>
+    <header class="topbar" id="ps-topbar"></header>
+    <main class="content">
+      <div class="pay-grid" id="payStats"></div>
+
+      <div class="pay-main">
+        <div class="flex" style="flex-direction:column; gap:var(--sp-5);">
+          <div class="card card-pad">
+            <div class="section-title"><h3>Receita — últimos 7 dias</h3><span class="badge badge-success"><i class="ri-arrow-up-line"></i>+12,4%</span></div>
+            <div id="payChart"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-pad" style="padding-bottom:0;">
+              <div class="table-toolbar">
+                <h3 style="font-size:var(--fs-md); font-weight:700;">Histórico de pagamentos</h3>
+                <div class="table-toolbar__filters" id="payFilters">
+                  <div class="filter-chip is-active" data-status="todos">Todos</div>
+                  <div class="filter-chip" data-status="pago">Pagos</div>
+                  <div class="filter-chip" data-status="pendente">Pendentes</div>
+                  <div class="filter-chip" data-status="atrasado">Atrasados</div>
+                </div>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Paciente</th><th>Valor</th><th>Método</th><th>Data</th><th>Status</th></tr></thead>
+                <tbody id="payTbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex" style="flex-direction:column; gap:var(--sp-5);">
+          <div class="card card-pad">
+            <div class="section-title"><h3>Métodos de pagamento</h3></div>
+            <div id="payMethods"></div>
+          </div>
+          <div class="card card-pad">
+            <div class="section-title"><h3>Status de cobrança</h3></div>
+            <div id="payBillingStatus"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="js/mock-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/pagamentos.js"></script>
+</body>
+</html>

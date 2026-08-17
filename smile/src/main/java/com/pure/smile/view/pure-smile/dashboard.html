@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Smile — Dashboard</title>
+<script>(function(){var t=localStorage.getItem('ps-theme'); if(t) document.documentElement.setAttribute('data-theme', t);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .dash-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-5); margin-bottom:var(--sp-6); }
+  @media(max-width:1180px){ .dash-grid{ grid-template-columns:repeat(2,1fr);} }
+
+  .dash-main{ display:grid; grid-template-columns:1.6fr 1fr; gap:var(--sp-5); align-items:start; }
+  @media(max-width:1080px){ .dash-main{ grid-template-columns:1fr; } }
+
+  .chart-tabs{ display:flex; gap:6px; }
+  .chart-tabs button{
+    border:1px solid var(--border); background:var(--card-alt); color:var(--text-2);
+    font-size:11px; font-weight:700; padding:6px 12px; border-radius:99px; cursor:pointer;
+  }
+  .chart-tabs button.is-active{ background:var(--primary); border-color:var(--primary); color:#fff; }
+
+  .bars{ display:flex; align-items:flex-end; gap:14px; height:180px; padding-top:var(--sp-4); }
+  .bars .bar-col{ flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; height:100%; justify-content:flex-end; }
+  .bars .bar{ width:100%; max-width:34px; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg, var(--accent), var(--primary)); transition:height .6s var(--ease); position:relative; }
+  .bars .bar-label{ font-size:11px; color:var(--text-2); }
+
+  .quick-actions{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .quick-action{
+    display:flex; flex-direction:column; align-items:flex-start; gap:10px; padding:var(--sp-4);
+    border-radius:var(--r-md); border:1px solid var(--border); background:var(--card-alt);
+    cursor:pointer; transition:all var(--t-fast) var(--ease);
+  }
+  .quick-action:hover{ background:var(--primary-soft); border-color:var(--primary); transform:translateY(-2px); }
+  .quick-action i{ font-size:20px; color:var(--primary); }
+  .quick-action span{ font-size:12.5px; font-weight:600; }
+
+  .list-row{ display:flex; align-items:center; gap:var(--sp-3); padding:var(--sp-3) 0; border-bottom:1px solid var(--border); }
+  .list-row:last-child{ border-bottom:none; }
+  .list-row img{ width:36px; height:36px; border-radius:50%; object-fit:cover; }
+  .list-row .meta strong{ display:block; font-size:13px; }
+  .list-row .meta span{ font-size:11.5px; color:var(--text-2); }
+  .list-row .time{ margin-left:auto; font-size:11px; color:var(--text-3); white-space:nowrap; }
+
+  .activity-row{ display:flex; gap:var(--sp-3); padding:var(--sp-3) 0; }
+  .activity-row i{ width:34px; height:34px; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; flex:none; font-size:16px; }
+  .activity-row p{ font-size:13px; }
+  .activity-row span{ font-size:11px; color:var(--text-3); }
+</style>
+</head>
+<body>
+<div class="app-shell" id="ps-app-shell">
+  <aside class="sidebar" id="ps-sidebar"></aside>
+
+  <div>
+    <header class="topbar" id="ps-topbar"></header>
+
+    <main class="content" id="dashboardContent">
+      <!-- injetado via JS conforme perfil -->
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="js/mock-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

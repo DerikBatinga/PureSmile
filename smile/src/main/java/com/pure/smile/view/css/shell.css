@@ -1,0 +1,499 @@
+/* =====================================================================
+   SHELL.CSS — Sidebar + Topbar + Dropdowns
+   Este arquivo monta a estrutura fixa (moldura) de todas as páginas:
+   sidebar à esquerda, topbar no topo, dropdowns e tooltip.
+   Cada bloco tem um comentário explicando a que serve.
+===================================================================== */
+
+/* ===================== SHELL (grade principal) =====================
+   Define o layout de duas colunas: sidebar fixa (248px) + conteúdo.
+   O <div class="app-shell"> é o wrapper de toda página.
+   .is-collapsed encolhe a sidebar para 76px (só ícones).
+===================================================================== */
+.app-shell {
+    display: grid;
+    grid-template-columns: 248px 1fr;
+    min-height: 100vh;
+    transition: grid-template-columns var(--transicao-padrao);
+}
+
+.app-shell.is-collapsed {
+    grid-template-columns: 76px 1fr;
+}
+
+/* ===================== SIDEBAR =====================
+   Menu lateral fixo à esquerda. Fica sticky (roda com a página).
+   - .sidebar__brand: logo + nome "Pure Smile" + perfil do usuário
+   - .sidebar__nav: lista de links do menu
+   - .sidebar__section-label: título de cada grupo (ex: "Geral", "Clínico")
+   - .nav-item: cada link individual; .is-active = link da página atual
+   - .sidebar__footer: botões "Recolher menu" e "Sair"
+===================================================================== */
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    background: var(--cor-superficie);
+    border-right: 1px solid var(--cor-borda);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 12px; /* equivalente a --esp-5 / --esp-3 */
+    z-index: 40;
+    overflow: hidden;
+}
+
+/* --- Brand: ícone + texto "Pure Smile" --- */
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px 24px; /* --esp-sm / --esp-3 / --esp-lg */
+    white-space: nowrap;
+}
+
+/* Quadrado gradiente com logo (a marca visual) */
+.sidebar__mark {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--borda-md);
+    flex: none;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--sombra-md);
+    overflow: hidden;
+}
+
+.sidebar__mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Texto ao lado do logo: nome + perfil */
+.sidebar__brand-text {
+    overflow: hidden;
+}
+
+.sidebar__brand-text strong {
+    display: block;
+    font-family: var(--font-titulo);
+    font-size: var(--texto-md);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.sidebar__brand-text span {
+    display: block;
+    font-size: 11px;
+    color: var(--cor-texto-secundario);
+}
+
+/* --- Rótulo de cada seção (ex: "Geral", "Clínico", "Conta") --- */
+.sidebar__section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--cor-texto-claro);
+    padding: 16px 12px 8px; /* --esp-md / --esp-3 / --esp-sm */
+    white-space: nowrap;
+}
+
+/* --- Lista de links --- */
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+/* Cada link do menu (ícone + texto) */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--borda-md);
+    color: var(--cor-texto-secundario);
+    font-size: var(--texto-sm);
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: background var(--transicao-rapida), color var(--transicao-rapida);
+    text-decoration: none;
+}
+
+.nav-item i {
+    font-size: 19px;
+    flex: none;
+}
+
+/* Hover: fundo sutil + texto escurece */
+.nav-item:hover {
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+}
+
+/* Estado ativo: fundo translúcido da primária + barra lateral azul */
+.nav-item.is-active {
+    background: var(--cor-primaria-suave);
+    color: var(--cor-primaria);
+    font-weight: 600;
+}
+
+/* Barra vertical à esquerda que indica a página ativa */
+.nav-item.is-active::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 18px;
+    border-radius: 99px;
+    background: var(--cor-secundaria);
+}
+
+/* --- Rodapé da sidebar (Recolher + Sair) --- */
+.sidebar__footer {
+    padding-top: 16px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.sidebar__collapse-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: var(--borda-md);
+    font-size: var(--texto-sm);
+    font-family: var(--font-texto);
+}
+
+.sidebar__collapse-btn:hover {
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+}
+
+.sidebar__collapse-btn i {
+    font-size: 18px;
+}
+
+/* ===================== SIDEBAR RECOLHIDA =====================
+   Quando .is-collapsed está ativo, esconde textos e centraliza ícones.
+===================================================================== */
+.app-shell.is-collapsed .sidebar__brand-text,
+.app-shell.is-collapsed .sidebar__section-label,
+.app-shell.is-collapsed .nav-item span:not(.badge-count),
+.app-shell.is-collapsed .sidebar__collapse-btn span {
+    display: none;
+}
+
+.app-shell.is-collapsed .nav-item {
+    justify-content: center;
+}
+
+.app-shell.is-collapsed .nav-item.is-active::before {
+    left: 0;
+}
+
+/* ===================== TOPBAR =====================
+   Barra horizontal no topo do conteúdo. Fica sticky (sobe com scroll).
+   Tem fundo translúcido com blur (efeito vidro/glass).
+   - .topbar__title: nome da página (ex: "Agenda")
+   - .topbar__crumb: descrição/breadcrumb
+   - .topbar__search: campo de busca
+   - .topbar__actions: botões à direita (tema, notificações, avatar)
+===================================================================== */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 32px;
+    background: var(--cor-superficie);
+    border-bottom: 1px solid var(--cor-borda);
+    transition: background var(--transicao-padrao);
+}
+
+.topbar__title {
+    font-size: var(--texto-lg);
+    font-weight: 600;
+    font-family: var(--font-titulo);
+}
+
+.topbar__crumb {
+    font-size: var(--texto-xs);
+    color: var(--cor-texto-secundario);
+    margin-top: 2px;
+}
+
+/* --- Campo de busca --- */
+.topbar__search {
+    flex: 1;
+    max-width: 380px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cor-terciaria);
+    border: 1px solid transparent;
+    border-radius: var(--borda-pill);
+    padding: 9px 16px;
+    color: var(--cor-texto-secundario);
+    transition: border var(--transicao-rapida), background var(--transicao-rapida);
+}
+
+.topbar__search:focus-within {
+    border-color: var(--cor-secundaria);
+    background: var(--cor-superficie);
+}
+
+.topbar__search input {
+    border: none;
+    background: none;
+    outline: none;
+    color: var(--cor-texto);
+    font-size: var(--texto-sm);
+    width: 100%;
+    font-family: var(--font-texto);
+}
+
+.topbar__search kbd {
+    font-size: 10px;
+    color: var(--cor-texto-claro);
+    border: 1px solid var(--cor-borda);
+    border-radius: 5px;
+    padding: 1px 5px;
+}
+
+/* --- Área de botões à direita --- */
+.topbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ===================== BOTÕES DE ÍCONE =====================
+   Usados na topbar para tema, notificações, etc.
+   Botão circular de 38px, sem fundo, com hover sutil.
+===================================================================== */
+.icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--borda-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    position: relative;
+    font-size: 18px;
+    transition: all var(--transicao-rapida);
+}
+
+.icon-btn:hover {
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+    border-color: var(--cor-borda);
+}
+
+/* Ponto vermelho de notificação (badge) */
+.icon-btn .dot {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cor-erro);
+    border: 2px solid var(--cor-superficie);
+}
+
+/* ===================== AVATAR (menu do usuário) =====================
+   Foto + nome + seta. Ao clicar abre o dropdown de perfil/sair.
+===================================================================== */
+.avatar-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--borda-md);
+}
+
+.avatar-menu:hover {
+    background: var(--cor-terciaria);
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--cor-superficie);
+    flex: none;
+}
+
+/* Nome + perfil ao lado do avatar (só aparece em telas largas) */
+.avatar-menu__meta {
+    display: none;
+}
+
+@media (min-width: 1180px) {
+    .avatar-menu__meta {
+        display: block;
+    }
+
+    .avatar-menu__meta strong {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 600;
+    }
+
+    .avatar-menu__meta span {
+        display: block;
+        font-size: 11px;
+        color: var(--cor-texto-secundario);
+    }
+}
+
+/* ===================== CONTEÚDO =====================
+   Área onde fica o conteúdo de cada página (abaixo da topbar).
+===================================================================== */
+.content {
+    padding: 32px; /* --esp-xl */
+    max-width: 1400px;
+}
+
+/* ===================== DROPDOWNS =====================
+   Menu flutuante que aparece ao clicar em um botão.
+   - .dropdown: wrapper com position:relative
+   - .dropdown__menu: painel posicionado abaixo do botão
+   - .dropdown__item: cada opção do menu
+   - .is-open: classe que abre/fecha o menu
+===================================================================== */
+.dropdown {
+    position: relative;
+}
+
+.dropdown__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--borda-md);
+    box-shadow: var(--sombra-lg);
+    padding: 8px; /* --esp-sm */
+    z-index: 60;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+    pointer-events: none;
+    transition: all var(--transicao-rapida);
+}
+
+/* Aberto: visível e clicável */
+.dropdown.is-open .dropdown__menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Cada item do dropdown (ícone + texto) */
+.dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: var(--texto-sm);
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.dropdown__item:hover {
+    background: var(--cor-terciaria);
+}
+
+.dropdown__item i {
+    font-size: 16px;
+    color: var(--cor-texto-secundario);
+}
+
+/* Item de perigo (ex: "Sair") */
+.dropdown__item.danger {
+    color: var(--cor-erro);
+}
+
+.dropdown__item.danger i {
+    color: var(--cor-erro);
+}
+
+/* Linha divisória entre grupos de itens */
+.dropdown__divider {
+    height: 1px;
+    background: var(--cor-borda);
+    margin: 6px 4px;
+}
+
+/* Título de seção dentro do dropdown */
+.dropdown__header {
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--cor-texto-secundario);
+}
+
+/* ===================== CLASSE UTILITÁRIA =====================
+   .text-muted: cor de texto secundária (para breadcrumbs, legendas)
+===================================================================== */
+.text-muted {
+    color: var(--cor-texto-secundario);
+}
+
+/* ===================== RESPONSIVO =====================
+   Telas menores: sidebar encolhe automaticamente,
+   busca some, padding diminui.
+===================================================================== */
+@media (max-width: 1080px) {
+    .app-shell {
+        grid-template-columns: 76px 1fr;
+    }
+
+    .app-shell .sidebar__brand-text,
+    .app-shell .sidebar__section-label,
+    .app-shell .nav-item span:not(.badge-count),
+    .app-shell .sidebar__collapse-btn span {
+        display: none;
+    }
+
+    .app-shell .nav-item {
+        justify-content: center;
+    }
+
+    .topbar {
+        padding: 0 16px; /* --esp-md */
+    }
+
+    .topbar__search {
+        display: none;
+    }
+
+    .content {
+        padding: 16px; /* --esp-md */
+    }
+}

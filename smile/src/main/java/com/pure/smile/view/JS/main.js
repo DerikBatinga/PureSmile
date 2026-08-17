@@ -7,15 +7,14 @@
 
 function init() {
 
-    // --- Acha os elementos no DOM (existem, pois o script roda no fim do body) ---
     const botao = document.querySelector('[data-action="toggle-tema"]');
     const atual = document.querySelector('[data-theme-icon]');
 
-    // --- Sincroniza o ícone com o tema já aplicado pelo <head> ---
-    // Sem isso, uma página escura mostraria a lua até o primeiro clique.
+    // Se o botão não existe na página, pula (ex: login, ou layout.js cuida)
+    if (!botao || !atual) return;
+
     atual.className = document.documentElement.getAttribute('data-theme') === 'dark' ? 'ri-sun-line' : 'ri-moon-line';
 
-    // --- Liga o clique do botão: lê, inverte, aplica e salva ---
     botao.addEventListener('click', function () {
         const temaAtual = document.documentElement.getAttribute('data-theme');
         const novoTema = temaAtual === 'light' ? 'dark' : 'light';
