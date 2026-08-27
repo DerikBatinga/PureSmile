@@ -1,8 +1,13 @@
 /* =====================================================================
-   AGENDA.CSS — Grade de horários (calendário semanal)
-   Replica a agenda da referência pure-smile, usando as variáveis
-   do global.css do projeto.
-===================================================================== */
+   AGENDA.CSS — Grade de horários (calendário semanal e diário)
+   ---------------------------------------------------------------------
+   A grade é montada pelo JS/agenda.js. Este CSS define o visual:
+   - toolbar (toggle Semanal/Diário + legenda)
+   - cabeçalho dos dias
+   - coluna de horários
+   - colunas dos dias com eventos posicionados por top/height
+   Os botões (.btn, .btn-acento) e o modal vêm de components.css.
+   ===================================================================== */
 
 /* ---------- Toolbar ----------
    Barra acima da grade com toggle Semanal/Diário, legenda de status
@@ -78,61 +83,38 @@
 .dot--concluida    { background: #2E8A44; }
 .dot--cancelada    { background: var(--cor-texto-claro); }
 
-/* Botão "Agendar consulta" */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 18px;
-    border-radius: var(--borda-md);
-    border: none;
-    font-family: var(--font-texto);
-    font-size: var(--texto-sm);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transicao-rapida);
-}
-
-.btn-accent {
-    background: linear-gradient(135deg, var(--cor-primaria), #22314A);
-    color: #fff;
-    box-shadow: var(--sombra-sm);
-}
-
-.btn-accent:hover {
-    box-shadow: var(--sombra-md);
-    transform: translateY(-1px);
-}
-
-.btn-accent:active {
-    transform: translateY(0);
-}
-
 /* ---------- Grade de horários ----------
    Grid: 64px (coluna de horas) + 7 colunas de 1fr.
-   Borda arredondada, fundo branco, overflow esconde eventos
-   que saem do grid.
+   Em telas pequenas a grade rola horizontalmente.
 ===================================================================== */
 .calendar {
     display: grid;
     grid-template-columns: 64px repeat(7, 1fr);
     border: 1px solid var(--cor-borda);
     border-radius: var(--borda-lg);
-    overflow: hidden;
+    overflow-x: auto;              /* rola para os lados se faltar espaço */
     background: var(--cor-superficie);
+    max-width: 100%;
 }
 
-/* ---------- Cabeçalho dos dias ----------
-   Cada célula do topo mostra o nome do dia e a data.
-   .is-today destaca o dia atual com fundo translúcido.
-===================================================================== */
+/* Visão DIÁRIA: uma única coluna de dia (lá fora a largura de 7) */
+.calendar.visao-dia {
+    grid-template-columns: 64px 1fr;
+}
+
+/* Largura mínima evita que as colunas espremam no desktop */
+.calendar.visao-semana {
+    min-width: 760px;
+}
+
+/* ---------- Cabeçalho dos dias ---------- */
 .cal-head {
     padding: var(--esp-sm) var(--esp-xs);
     text-align: center;
     border-bottom: 1px solid var(--cor-borda);
     border-left: 1px solid var(--cor-borda);
     background: var(--cor-terciaria);
+    white-space: nowrap;
 }
 
 .cal-head:first-child {
@@ -161,9 +143,7 @@
     color: var(--cor-primaria);
 }
 
-/* ---------- Coluna de horários ----------
-   Lista vertical de slots de 76px cada.
-===================================================================== */
+/* ---------- Coluna de horários ---------- */
 .cal-time-col {
     display: flex;
     flex-direction: column;
@@ -177,6 +157,7 @@
     color: var(--cor-texto-claro);
     border-top: 1px solid var(--cor-borda);
     transform: translateY(-6px);
+    white-space: nowrap;
 }
 
 .cal-time-slot:first-child {
@@ -190,6 +171,7 @@
 .cal-day-col {
     position: relative;
     border-left: 1px solid var(--cor-borda);
+    min-height: 912px;             /* 12 horários × 76px */
     background-image: repeating-linear-gradient(
         to bottom,
         transparent 0,
@@ -199,35 +181,14 @@
     );
 }
 
-/* Coluna com altura padrão (12 slots × 76px) */
-.cal-day-col--full {
-    height: 912px;
-}
-
 /* Destaque ao arrastar um evento sobre a coluna */
 .cal-day-col.drag-over {
     background-color: var(--cor-primaria-suave);
 }
 
-/* ── Posições de exemplo (topo / altura) ── */
-.t-76  { top: 76px; }
-.t-152 { top: 152px; }
-.t-190 { top: 190px; }
-.t-228 { top: 228px; }
-.t-304 { top: 304px; }
-.t-456 { top: 456px; }
-.t-532 { top: 532px; }
-.t-608 { top: 608px; }
-.t-722 { top: 722px; }
-
-.h-34  { height: 34px; }
-.h-53  { height: 53px; }
-.h-72  { height: 72px; }
-.h-110 { height: 110px; }
-
 /* ---------- Evento (consulta) ----------
-   Card colorido posicionado por top/height.
-   Borda esquerda escura dá profundidade.
+   Posição (top) e altura (height) são calculadas pelo JS com base no
+   horário e na duração. A borda esquerda escura dá profundidade.
 ===================================================================== */
 .cal-event {
     position: absolute;
@@ -242,7 +203,13 @@
     overflow: hidden;
     box-shadow: var(--sombra-sm);
     border-left: 3px solid rgba(0, 0, 0, 0.15);
-    transition: transform var(--transicao-rapida);
+    transition: transform var(--transicao-rapida), opacity var(--transicao-rapida);
+}
+
+/* Aviso visual de que o card está sendo arrastado */
+.cal-event.is-arrastando {
+    opacity: 0.4;
+    cursor: grabbing;
 }
 
 .cal-event:hover {
@@ -288,9 +255,9 @@
     gap: 6px;
 }
 
-/* ---------- Scrollbar ---------- */
+/* ---------- Scrollbar da grade ---------- */
 .calendar::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
 }
 
 .calendar::-webkit-scrollbar-track {
@@ -300,13 +267,4 @@
 .calendar::-webkit-scrollbar-thumb {
     background: var(--cor-borda);
     border-radius: 99px;
-}
-
-/* ---------- Responsivo ----------
-   Telas menores: grade com scroll horizontal.
-===================================================================== */
-@media (max-width: 900px) {
-    .calendar {
-        min-width: 800px;
-    }
 }

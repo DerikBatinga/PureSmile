@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pure Smile — Agenda</title>
+
+    <!-- Folhas na ordem: variáveis → moldura → componentes → desta página -->
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/shell.css">
+    <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/agenda.css">
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Aplica o tema salvo antes de desenhar a página -->
     <script>
         const tema = localStorage.getItem('ps-tema')
         document.documentElement.setAttribute('data-theme', tema || 'dark')
@@ -20,13 +26,14 @@
     <aside class="sidebar" id="ps-sidebar"></aside>
     <div>
         <header class="topbar" id="ps-topbar"></header>
+
         <main class="content">
             <!-- Toolbar -->
             <div class="agenda-toolbar">
                 <div class="agenda-toolbar__left">
                     <div class="agenda-view-switch">
-                        <button class="is-active" data-view="week">Semanal</button>
-                        <button data-view="day">Diário</button>
+                        <button class="is-active" data-view="week"><i class="ri-calendar-2-line"></i> Semanal</button>
+                        <button data-view="day"><i class="ri-calendar-line"></i> Diário</button>
                     </div>
                     <div class="agenda-legend">
                         <span><i class="dot--confirmada"></i> Confirmada</span>
@@ -35,102 +42,95 @@
                         <span><i class="dot--cancelada"></i> Cancelada</span>
                     </div>
                 </div>
-                <button class="btn btn-accent" id="btnNewAppointment">
-                    <i class="ri-calendar-event-line"></i> Agendar consulta
-                </button>
+                <button class="btn btn-fantasma" id="btnHoje"><i class="ri-reply-line"></i> Hoje</button>
+                <button class="btn btn-acento" id="btnAgendar"><i class="ri-calendar-event-line"></i> Agendar consulta</button>
             </div>
 
-            <!-- Grade de horários -->
-            <div class="calendar">
-                <!-- Cabeçalho: dia vazio + 7 dias -->
-                <div class="cal-head"></div>
-                <div class="cal-head is-today"><strong>Seg</strong><span>Hoje</span></div>
-                <div class="cal-head"><strong>Ter</strong><span>Dia 2</span></div>
-                <div class="cal-head"><strong>Qua</strong><span>Dia 3</span></div>
-                <div class="cal-head"><strong>Qui</strong><span>Dia 4</span></div>
-                <div class="cal-head"><strong>Sex</strong><span>Dia 5</span></div>
-                <div class="cal-head"><strong>Sáb</strong><span>Dia 6</span></div>
-                <div class="cal-head"><strong>Dom</strong><span>Dia 7</span></div>
-
-                <!-- Coluna de horários -->
-                <div class="cal-time-col">
-                    <div class="cal-time-slot">7:00</div>
-                    <div class="cal-time-slot">8:00</div>
-                    <div class="cal-time-slot">9:00</div>
-                    <div class="cal-time-slot">10:00</div>
-                    <div class="cal-time-slot">11:00</div>
-                    <div class="cal-time-slot">12:00</div>
-                    <div class="cal-time-slot">13:00</div>
-                    <div class="cal-time-slot">14:00</div>
-                    <div class="cal-time-slot">15:00</div>
-                    <div class="cal-time-slot">16:00</div>
-                    <div class="cal-time-slot">17:00</div>
-                    <div class="cal-time-slot">18:00</div>
-                </div>
-
-                <!-- Segunda -->
-                <div class="cal-day-col cal-day-col--full">
-                    <div class="cal-event st-confirmada t-76 h-72">
-                        Marina Souza<span>08:00 · Manutenção Ortodôntica</span>
-                    </div>
-                    <div class="cal-event st-em-andamento t-190 h-110">
-                        João Pedro Martins<span>09:30 · Implante — Avaliação</span>
-                    </div>
-                    <div class="cal-event st-confirmada t-304 h-72">
-                        Sofia Nascimento<span>11:00 · Canal</span>
-                    </div>
-                </div>
-
-                <!-- Terça -->
-                <div class="cal-day-col cal-day-col--full">
-                    <div class="cal-event st-confirmada t-532 h-53">
-                        Gabriel Teixeira<span>14:00 · Limpeza</span>
-                    </div>
-                    <div class="cal-event st-cancelada t-608 h-34">
-                        Isabela Cruz<span>15:00 · Avaliação</span>
-                    </div>
-                </div>
-
-                <!-- Quarta -->
-                <div class="cal-day-col cal-day-col--full">
-                    <div class="cal-event st-concluida t-228 h-72">
-                        Lucas Andrade<span>10:00 · Extração</span>
-                    </div>
-                    <div class="cal-event st-confirmada t-722 h-72">
-                        Fernando Melo<span>16:30 · Implante</span>
-                    </div>
-                </div>
-
-                <!-- Quinta -->
-                <div class="cal-day-col cal-day-col--full">
-                    <div class="cal-event st-confirmada t-152 h-53">
-                        Marina Souza<span>09:00 · Manutenção Ortodôntica</span>
-                    </div>
-                </div>
-
-                <!-- Sexta -->
-                <div class="cal-day-col cal-day-col--full">
-                    <div class="cal-event st-confirmada t-456 h-72">
-                        Helena Duarte<span>13:00 · Canal</span>
-                    </div>
-                </div>
-
-                <!-- Sábado -->
-                <div class="cal-day-col cal-day-col--full"></div>
-
-                <!-- Domingo -->
-                <div class="cal-day-col cal-day-col--full"></div>
-            </div>
+            <!-- A grade inteira (semanal ou diária) é montada pelo agenda.js -->
+            <div id="gradeAgenda"></div>
 
             <p class="agenda-hint">
                 <i class="ri-drag-move-2-line"></i>
-                Arraste um card para outro dia para reagendar (demonstração visual).
+                Arraste um card para outro dia da semana para reagendar a consulta.
             </p>
         </main>
     </div>
 </div>
+
+<!-- MODAL: agendar nova consulta -->
+<div class="modal-fundo" id="modalAgendar">
+    <div class="modal">
+        <div class="modal-cabecalho">
+            <div>
+                <h3>Agendar consulta</h3>
+                <p>Monte a consulta escolhendo paciente, dentista, dia e horário.</p>
+            </div>
+            <button class="fechar-modal" data-fechar-modal><i class="ri-close-line"></i></button>
+        </div>
+
+        <form class="modal-corpo" id="formAgendar">
+            <div class="campo">
+                <label>Paciente</label>
+                <select class="input" id="agPaciente" required></select>
+            </div>
+            <div class="campo">
+                <label>Dentista</label>
+                <select class="input" id="agDentista" required></select>
+            </div>
+            <div class="grade-form">
+                <div class="campo">
+                    <label>Dia da semana</label>
+                    <select class="input" id="agDia" required>
+                        <option value="1">Segunda-feira</option>
+                        <option value="2">Terça-feira</option>
+                        <option value="3">Quarta-feira</option>
+                        <option value="4">Quinta-feira</option>
+                        <option value="5">Sexta-feira</option>
+                        <option value="6">Sábado</option>
+                        <option value="7">Domingo</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label>Horário</label>
+                    <input class="input" type="time" id="agHorario" min="07:00" max="18:00" required>
+                </div>
+                <div class="campo">
+                    <label>Duração</label>
+                    <select class="input" id="agDuracao">
+                        <option value="30">30 min</option>
+                        <option value="45">45 min</option>
+                        <option value="60" selected>60 min</option>
+                        <option value="90">90 min</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label>Procedimento</label>
+                    <select class="input" id="agProcedimento">
+                        <option>Limpeza</option>
+                        <option>Canal</option>
+                        <option>Extração</option>
+                        <option>Ortodontia</option>
+                        <option>Implante</option>
+                        <option>Avaliação</option>
+                        <option>Manutenção Ortodôntica</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal-rodape">
+            <button class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button class="btn btn-primario" id="btnSalvarAgendar"><i class="ri-calendar-check-line"></i> Confirmar agendamento</button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts na ordem: base → layout → dados → auxiliares → página -->
 <script src="../JS/main.js"></script>
 <script src="../JS/layout.js"></script>
+<script src="../JS/dados.js"></script>
+<script src="../JS/auxiliares.js"></script>
+<script src="../JS/agenda.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </body>
 </html>

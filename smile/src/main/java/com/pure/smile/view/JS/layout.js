@@ -229,6 +229,19 @@ const PSLayout = {
         });
     },
 
+    /* ---------- TROCAR TÍTULO DA TOPBAR ----------
+       Algumas páginas (ex: dashboard) mudam o título conforme o
+       perfil logado. Esta função atualiza o texto depois da página
+       ter sido montada por render().
+    ================================================== */
+    trocarTitulo(titulo, crumb) {
+        const tituloEl = document.querySelector('.topbar__title');
+        if (tituloEl) tituloEl.textContent = titulo;
+
+        const crumbEl = document.querySelector('.topbar__crumb');
+        if (crumbEl) crumbEl.textContent = crumb;
+    },
+
     /* ---------- EVENTOS DA SIDEBAR/TOPBAR ---------- */
     bindEvents() {
         /* Recolher/expandir sidebar */
@@ -299,6 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'pagamentos.html': { title: 'Pagamentos',  crumb: 'Financeiro' },
         'perfil.html':     { title: 'Meu Perfil',  crumb: 'Dados do usuário logado' },
         'configuracoes.html': { title: 'Configurações', crumb: 'Sistema' },
+        'paciente-detalhes.html': { title: 'Detalhes do paciente', crumb: 'Dados completos e histórico clínico' },
     };
 
     const config = pageConfig[page] || { title: 'Pure Smile', crumb: '' };

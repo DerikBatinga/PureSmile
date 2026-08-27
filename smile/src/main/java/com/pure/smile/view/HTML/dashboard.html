@@ -4,30 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pure Smile — Dashboard</title>
+
+    <!-- Folhas de estilo: global (variáveis) → shell (moldura) → componentes (reutilizáveis) → desta página -->
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/shell.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Ícones e fontes -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800"
           rel="stylesheet">
+
+    <!-- Aplica o tema salvo ANTES da página desenhar (evita "piscar" branco no escuro) -->
     <script>
         const tema = localStorage.getItem('ps-tema')
         document.documentElement.setAttribute('data-theme', tema || 'dark')
     </script>
 </head>
 <body>
+
+<!-- Moldura fixa: sidebar + topbar + área de conteúdo -->
 <div class="app-shell" id="ps-app-shell">
     <aside class="sidebar" id="ps-sidebar"></aside>
     <div>
         <header class="topbar" id="ps-topbar"></header>
-        <main class="content">
-            <h1>Dashboard</h1>
-            <p>Conteúdo em construção.</p>
-        </main>
+
+        <!-- O conteúdo do dashboard é montado pelo JS conforme o perfil logado -->
+        <main class="content" id="conteudoDash"></main>
     </div>
 </div>
+
+<!-- Scripts na ordem certa: base → layout → dados → auxiliares → página -->
 <script src="../JS/main.js"></script>
 <script src="../JS/layout.js"></script>
+<script src="../JS/dados.js"></script>
+<script src="../JS/auxiliares.js"></script>
+<script src="../JS/dashboard.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </body>
 </html>

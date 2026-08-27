@@ -1,0 +1,739 @@
+/* =====================================================================
+   COMPONENTS.CSS — Kit de componentes reutilizáveis do Pure Smile
+   ---------------------------------------------------------------------
+   Este arquivo centraliza os pedaços de estilo que se repetem em
+   várias páginas: botões, cartões, tabelas, selos (badges), modais
+   e formulários.
+
+   Vantagem: se você mudar a cor de um botão aqui, muda em TUDAS as
+   páginas de uma vez. Usa apenas as variáveis do global.css.
+   ===================================================================== */
+
+/* =====================================================
+   1) BOTÕES
+   Base: .btn define o formato de TODO botão.
+   Depois vem as cores: .btn-primario, .btn-acento etc.
+   ===================================================== */
+.btn {
+    display: inline-flex;            /* ícone + texto ficam em linha */
+    align-items: center;             /* centraliza na vertical */
+    justify-content: center;
+    gap: 8px;                        /* espaço entre ícone e texto */
+    padding: 10px 18px;              /* tamanho do botão */
+    border-radius: var(--borda-md);  /* cantos arredondados */
+    border: 1px solid transparent;   /* sem borda visível por padrão */
+    font-family: var(--font-texto);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    cursor: pointer;                 /* mostra "mãozinha" ao passar mouse */
+    white-space: nowrap;             /* evita o texto quebrar linha */
+    transition: all var(--transicao-rapida);
+}
+
+/* Efeito sutil ao clicar: botão "afunda" um pouco */
+.btn:active {
+    transform: translateY(1px) scale(0.99);
+}
+
+/* Versão pequena (usada em listas e "ver todos") */
+.btn-pequeno {
+    padding: 7px 13px;
+    font-size: var(--texto-xs);
+}
+
+/* Botão principal — usado para a ação mais importante da tela */
+.btn-primario {
+    background: var(--cor-primaria);
+    color: var(--cor-branco);
+    box-shadow: var(--sombra-sm);
+}
+.btn-primario:hover {
+    background: var(--cor-primaria-hover);
+    box-shadow: var(--sombra-md);
+}
+
+/* Botão de destaque — gradiente da marca, usado em "Novo cadastro" */
+.btn-acento {
+    background: linear-gradient(135deg, var(--cor-primaria), #22314A);
+    color: #fff;
+    box-shadow: var(--sombra-md);
+}
+.btn-acento:hover {
+    box-shadow: var(--sombra-lg);
+    transform: translateY(-1px);     /* botão "levanta" no hover */
+}
+
+/* Botão secundário — ação suave (ex: Cancelar) */
+.btn-secundario {
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+    border-color: var(--cor-borda);
+}
+.btn-secundario:hover {
+    background: var(--cor-fundo);
+}
+
+/* Botão perigo — ações destrutivas (ex: excluir) */
+.btn-perigo {
+    background: rgba(239, 68, 68, 0.1);   /* vermelho bem claro */
+    color: var(--cor-erro);
+}
+.btn-perigo:hover {
+    background: var(--cor-erro);
+    color: #fff;
+}
+
+/* Botão fantasma — sem fundo, só texto (ex: "Ver agenda") */
+.btn-fantasma {
+    background: transparent;
+    color: var(--cor-texto-secundario);
+}
+.btn-fantasma:hover {
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+}
+
+/* Botão ocupa a largura toda (usado no login) */
+.btn-bloco {
+    width: 100%;
+}
+
+/* =====================================================
+   2) CARTÕES
+   .cartao é a "caixa branca" que segura o conteúdo.
+   .cartao-titulo é a barra do topo com título + ação à direita.
+   ===================================================== */
+.cartao {
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--borda-lg);
+    box-shadow: var(--sombra-sm);
+    transition: box-shadow var(--transicao-padrao),
+                transform var(--transicao-padrao);
+}
+
+/* Hover: cartão "flutua" levemente (dá vida à interface) */
+.cartao-flutuante:hover {
+    box-shadow: var(--sombra-md);
+    transform: translateY(-2px);
+}
+
+/* Preenchimento interno padrão do cartão */
+.cartao-corpo {
+    padding: var(--esp-lg);
+}
+
+/* Barra do topo do cartão: título à esquerda, botão à direita */
+.cartao-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--esp-md);
+}
+.cartao-titulo h3 {
+    font-family: var(--font-titulo);
+    font-size: var(--texto-md);
+}
+
+/* =====================================================
+   3) CARTÃO DE ESTATÍSTICA (número grande + ícone colorido)
+   Usado no topo do Dashboard, Procedimentos e Pagamentos.
+   ===================================================== */
+.grade-stat {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 cartões lado a lado */
+    gap: var(--esp-md);
+    margin-bottom: var(--esp-lg);
+}
+
+/* Em telas médias: 2 cartões por linha */
+@media (max-width: 1100px) {
+    .grade-stat { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Em telas pequenas: 1 cartão por linha */
+@media (max-width: 600px) {
+    .grade-stat { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+    padding: var(--esp-md) var(--esp-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--esp-md);
+}
+
+/* Quadradinho colorido onde fica o ícone */
+.stat-icone {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--borda-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex: none;                /* não encolhe */
+}
+
+/* Número grande */
+.stat-valor {
+    font-family: var(--font-titulo);
+    font-size: var(--texto-xl);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+/* Legenda embaixo do número */
+.stat-rotulo {
+    font-size: var(--texto-xs);
+    color: var(--cor-texto-secundario);
+}
+
+/* Variações de cor de ícone (usadas junto com .stat-icone) */
+.icone-primario  { background: var(--cor-primaria-suave);  color: var(--cor-primaria); }
+.icone-sucesso   { background: rgba(107, 203, 119, 0.16);  color: #2E8A44; }
+.icone-aviso     { background: rgba(255, 184, 77, 0.18);   color: #B36A00; }
+.icone-info      { background: rgba(94, 129, 172, 0.14);   color: #5E81AC; }
+
+/* =====================================================
+   4) SELOS / BADGES (etiquetas de status)
+   Cada status tem uma cor. Usamos classes extras
+   (.selo-sucesso, .selo-aviso...) para trocar a cor.
+   ===================================================== */
+.selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--borda-pill);  /* formato pílula */
+    white-space: nowrap;
+}
+
+.selo-sucesso { background: rgba(107, 203, 119, 0.16); color: #2E8A44; }
+.selo-aviso   { background: rgba(255, 184, 77, 0.18);  color: #B36A00; }
+.selo-erro    { background: rgba(239, 68, 68, 0.10);   color: #C62828; }
+.selo-info    { background: var(--cor-primaria-suave); color: var(--cor-primaria); }
+.selo-neutro  { background: var(--cor-terciaria);      color: var(--cor-texto-secundario); }
+
+/* =====================================================
+   5) TABELAS
+   Estrutura: .tabela-enrole (deixa rolar lateralmente se faltar
+   espaço) > table.lista > thead > tbody.
+   ===================================================== */
+.tabela-enrole {
+    overflow-x: auto;
+}
+
+table.lista {
+    width: 100%;
+    border-collapse: collapse;   /* tira o espaço duplo entre células */
+}
+
+/* Cabeçalho: texto pequeno, maiúsculo e cinza */
+table.lista thead th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cor-texto-secundario);
+    font-weight: 700;
+    padding: var(--esp-sm) var(--esp-md);
+    border-bottom: 1px solid var(--cor-borda);
+    white-space: nowrap;
+}
+
+/* Células do corpo */
+table.lista tbody td {
+    padding: 14px var(--esp-md);
+    font-size: var(--texto-sm);
+    border-bottom: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+    vertical-align: middle;
+}
+
+/* Linha ganha fundo ao passar o mouse */
+table.lista tbody tr {
+    transition: background var(--transicao-rapida);
+}
+table.lista tbody tr:hover {
+    background: var(--cor-terciaria);
+}
+
+/* Última linha não tem a borda de baixo (fica mais limpo) */
+table.lista tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Célula com foto + nome + informação extra (subtexto) */
+.celula-perfil {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-sm);
+}
+.celula-perfil img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+}
+.celula-perfil .nome { font-weight: 600; }
+.celula-perfil .sub { font-size: 11px; color: var(--cor-texto-secundario); }
+
+/* =====================================================
+   6) BARRA DE FERRAMENTAS DA TABELA
+   Linha acima da tabela: filtros à esquerda, busca/botão à direita.
+   ===================================================== */
+.barra-tabela {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-md);
+    flex-wrap: wrap;               /* quebra linha se faltar espaço */
+    margin-bottom: var(--esp-md);
+}
+
+/* Grupo de chips de filtro */
+.filtro-grupo {
+    display: flex;
+    gap: var(--esp-sm);
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Chip de filtro (ex: Todos, Ativos, Inativos...) */
+.filtro-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--borda-pill);
+    border: 1px solid var(--cor-borda);
+    background: var(--cor-card);
+    color: var(--cor-texto-secundario);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+}
+
+/* Chip selecionado: ganha a cor da marca */
+.filtro-chip.ativo {
+    background: var(--cor-primaria-suave);
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+}
+
+/* Campo de busca reutilizável (esconde o input em telas pequenas) */
+.buscar-campo {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-sm);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--borda-pill);
+    padding: 8px 14px;
+    color: var(--cor-texto-secundario);
+}
+.buscar-campo input {
+    border: none;
+    background: none;
+    outline: none;
+    font-family: var(--font-texto);
+    font-size: var(--texto-sm);
+    color: var(--cor-texto);
+    width: 100%;
+}
+
+/* =====================================================
+   7) FORMULÁRIOS
+   .campo = um rótulo + um input empilhados (coluna).
+   .grade-form = duas colunas lado a lado (usado em modais).
+   ===================================================== */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--esp-md);
+}
+
+.campo label {
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+}
+
+/* Caixas de entrada (texto, senha, select, textarea) */
+.input {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: var(--borda-md);
+    border: 1.5px solid var(--cor-borda);
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+    font-family: var(--font-texto);
+    font-size: var(--texto-sm);
+    transition: all var(--transicao-rapida);
+}
+
+/* Ao focar: borda azul + anel suave ao redor */
+.input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 4px var(--cor-primaria-suave);
+}
+
+/* Textarea pode ser redimensionado verticalmente */
+textarea.input {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Grade de formulário com 2 colunas */
+.grade-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--esp-md);
+}
+
+/* Item que ocupa as 2 colunas inteiras */
+.grade-form .dupla {
+    grid-column: 1 / -1;
+}
+
+/* Linha com checkbox (texto à direita da caixinha) */
+.linha-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--texto-sm);
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    margin-bottom: var(--esp-sm);
+}
+.linha-checkbox input {
+    accent-color: var(--cor-primaria);  /* cor do "tick" do checkbox */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* =====================================================
+   8) MODAIS (janelas que abrem por cima da página)
+   .modal-fundo cobre a tela toda com um fundo escuro.
+   .modal é a caixa branca central.
+   ===================================================== */
+.modal-fundo {
+    position: fixed;
+    inset: 0;                          /* ocupa a tela toda */
+    background: rgba(15, 20, 30, 0.5); /* escurece o fundo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;                        /* escondido por padrão */
+    pointer-events: none;              /* não esconde os cliques */
+    transition: opacity var(--transicao-padrao);
+}
+
+/* Aberto: visível e clicável */
+.modal-fundo.aberto {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Caixa branca central */
+.modal {
+    width: 100%;
+    max-width: 560px;
+    max-height: 88vh;
+    overflow-y: auto;                  /* rola se o conteúdo for grande */
+    background: var(--cor-superficie);
+    border-radius: var(--borda-lg);
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-lg);
+    transform: translateY(16px);       /* começa levemente abaixo */
+    opacity: 0;
+    transition: all var(--transicao-padrao);
+}
+
+/* Modal maior (ex: cadastro de paciente com muitos campos) */
+.modal-ampla { max-width: 720px; }
+
+/* Quando o fundo está aberto, o modal sobe e aparece */
+.modal-fundo.aberto .modal {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Cabeçalho do modal: título + botão de fechar */
+.modal-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--esp-lg);
+    border-bottom: 1px solid var(--cor-borda);
+}
+.modal-cabecalho h3 { font-family: var(--font-titulo); font-size: var(--texto-lg); }
+.modal-cabecalho p  { font-size: var(--texto-xs); color: var(--cor-texto-secundario); margin-top: 3px; }
+
+/* Corpo do modal: fica os campos do formulário */
+.modal-corpo {
+    padding: var(--esp-lg);
+}
+
+/* Rodapé do modal: botões alinhados à direita */
+.modal-rodape {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--esp-sm);
+    padding: var(--esp-md) var(--esp-lg);
+    border-top: 1px solid var(--cor-borda);
+}
+
+/* Botãozinho X de fechar */
+.fechar-modal {
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--borda-sm);
+}
+.fechar-modal:hover {
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+}
+
+/* =====================================================
+   9) ABAS (abas para trocar de conteúdo na mesma página)
+   Botões no topo; cada aba mostra um painel diferente.
+   ===================================================== */
+.abas {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--cor-borda);
+    margin-bottom: var(--esp-lg);
+    flex-wrap: wrap;
+}
+
+.aba {
+    padding: 10px 16px;
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color var(--transicao-rapida);
+}
+
+/* Aba ativa: texto na cor da marca + linha azul embaixo */
+.aba.ativa {
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+/* Painel de conteúdo de cada aba (escondido até ser ativado) */
+.painel {
+    display: none;
+}
+.painel.ativo {
+    display: block;
+}
+
+/* =====================================================
+   10) ESTADO VAZIO (quando não há dados pra mostrar)
+   ===================================================== */
+.vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--esp-xl) var(--esp-lg);
+    color: var(--cor-texto-secundario);
+}
+.vazio i {
+    font-size: 56px;
+    color: var(--cor-texto-claro);
+    margin-bottom: var(--esp-sm);
+}
+.vazio h4 {
+    font-family: var(--font-titulo);
+    font-size: var(--texto-md);
+    color: var(--cor-texto);
+    margin-bottom: 4px;
+}
+.vazio p {
+    font-size: var(--texto-sm);
+    max-width: 320px;
+    margin-bottom: var(--esp-md);
+}
+
+/* Respeita o atributo hidden dos navegadores (senão o display:flex
+   de .vazio acima "ganha" e o aviso aparece mesmo escondido) */
+.vazio[hidden] { display: none; }
+
+/* =====================================================
+   11) GRÁFICO DE BARRAS (feito só com CSS, sem biblioteca)
+   Uma linha de "colunas"; quanto maior o valor, mais alta a
+   barra. A altura é definida pelo JS (style inline).
+   ===================================================== */
+.grafico-barras {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 180px;
+    padding-top: var(--esp-md);
+}
+
+/* Uma coluna do gráfico */
+.barra-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+/* A barra em si (gradiente da marca) */
+.barra {
+    width: 100%;
+    max-width: 34px;
+    border-radius: 8px 8px 4px 4px;
+    background: linear-gradient(180deg, #5E81AC, var(--cor-primaria));
+    transition: height 0.6s ease;
+}
+
+/* Nome do dia embaixo da barra */
+.barra-rotulo {
+    font-size: 11px;
+    color: var(--cor-texto-secundario);
+}
+
+/* =====================================================
+   12) LISTAS SIMPLES (linha com foto + texto + algo à direita)
+   Usadas em "Próximas consultas", "Atividades" etc.
+   ===================================================== */
+.linha-lista {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-sm);
+    padding: var(--esp-sm) 0;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.linha-lista:last-child { border-bottom: none; }
+
+.linha-lista img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+}
+
+/* Texto principal e texto secundário empilhados */
+.linha-lista .meta strong { display: block; font-size: 13px; }
+.linha-lista .meta span  { display: block; font-size: 11.5px; color: var(--cor-texto-secundario); }
+
+/* Alinhada à direita (horas, status...) */
+.linha-lista .direita {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--cor-texto-secundario);
+    white-space: nowrap;
+}
+
+/* =====================================================
+   13) NOTIFICAÇÃO TOAST (canto inferior direito)
+   As classes .toast aparecem e somem via JS (auxiliares.js).
+   ===================================================== */
+.toast-pilha {
+    position: fixed;
+    bottom: var(--esp-lg);
+    right: var(--esp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-sm);
+    z-index: 200;
+}
+
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--esp-sm);
+    min-width: 300px;
+    max-width: 360px;
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-left: 4px solid var(--cor-primaria);   /* cor muda por tipo */
+    border-radius: var(--borda-md);
+    padding: var(--esp-md);
+    box-shadow: var(--sombra-lg);
+    animation: toast-sobe 0.35s ease;
+}
+
+/* Cores da borda esquerda conforme o tipo */
+.toast-sucesso { border-left-color: var(--cor-sucesso); }
+.toast-aviso   { border-left-color: var(--cor-aviso); }
+.toast-erro    { border-left-color: var(--cor-erro); }
+
+.toast i { font-size: 20px; color: var(--cor-primaria); }
+.toast-sucesso i { color: var(--cor-sucesso); }
+.toast-aviso i   { color: var(--cor-aviso); }
+.toast-erro i    { color: var(--cor-erro); }
+
+.toast strong { display: block; font-size: var(--texto-sm); }
+.toast p      { font-size: 12.5px; color: var(--cor-texto-secundario); margin-top: 2px; }
+
+/* Saída suave do toast */
+.toast.saindo { animation: toast-sai 0.25s ease forwards; }
+
+@keyframes toast-sobe {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-sai {
+    to { opacity: 0; transform: translateX(24px); }
+}
+
+/* =====================================================
+   14) UTILITÁRIOS (pequenos ajustes usados em várias telas)
+   ===================================================== */
+.texto-apagado { color: var(--cor-texto-secundario); }
+.texto-pequeno { font-size: var(--texto-xs); }
+
+.flex         { display: flex; }
+.flex-centro  { align-items: center; }
+.espaco-entre { justify-content: space-between; }
+.gap-sm       { gap: var(--esp-sm); }
+.gap-md       { gap: var(--esp-md); }
+.gap-lg       { gap: var(--esp-lg); }
+
+.margem-baixo-md  { margin-bottom: var(--esp-md); }
+.margem-baixo-lg  { margin-bottom: var(--esp-lg); }
+.margem-topo-md   { margin-top: var(--esp-md); }
+.margem-topo-lg   { margin-top: var(--esp-lg); }
+
+.divisoria {
+    height: 1px;
+    background: var(--cor-borda);
+    border: none;
+    margin: var(--esp-md) 0;
+}
+
+/* Caixa de aviso colorida (usada em "Alterar senha", etc.) */
+.aviso {
+    display: flex;
+    gap: var(--esp-sm);
+    padding: var(--esp-md);
+    border-radius: var(--borda-md);
+    font-size: var(--texto-sm);
+    margin-bottom: var(--esp-md);
+}
+.aviso-info { background: var(--cor-primaria-suave); color: var(--cor-primaria); }

@@ -1,0 +1,119 @@
+/* =====================================================================
+   DASHBOARD.CSS — Estilo exclusivo da página inicial
+   ---------------------------------------------------------------------
+   Este arquivo só tem o que é PRÓPRIO da página de Dashboard.
+   Os componentes reutilizáveis (cartões, botões, gráficos) já
+   estão em components.css.
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   GRADE DOS 4 CARTÕES DE ESTATÍSTICA NO TOPO
+   Components.css já cuida de ficar responsivo.
+   Aqui só afirmamos o espaçamento inferior.
+----------------------------------------------------- */
+.dash-stats {
+    margin-bottom: var(--esp-lg);
+}
+
+/* -----------------------------------------------------
+   TOPO DO DASHBOARD: lado esquerdo (coluna principal)
+   + lado direito (coluna de ações). Duas colunas.
+----------------------------------------------------- */
+.dash-colunas {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;  /* esquerda maior que a direita */
+    gap: var(--esp-lg);
+    align-items: start;
+}
+
+/* Em telas menores vira uma coluna só */
+@media (max-width: 1100px) {
+    .dash-colunas { grid-template-columns: 1fr; }
+}
+
+/* Cada coluna é uma pilha vertical de cartões */
+.dash-pilha {
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-lg);
+}
+
+/* -----------------------------------------------------
+   AÇÕES RÁPIDAS (grade 2x2 de botõezinhos)
+----------------------------------------------------- */
+.acoes-rapidas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 2 por linha */
+    gap: 10px;
+}
+
+/* Cada botão de ação rápida */
+.acao-rapida {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: var(--esp-md);
+    border-radius: var(--borda-md);
+    border: 1px solid var(--cor-borda);
+    background: var(--cor-fundo);
+    cursor: pointer;
+    font-family: var(--font-texto);
+    text-align: left;
+    transition: all var(--transicao-rapida);
+}
+
+/* Hover: ganha a cor da marca e "levanta" */
+.acao-rapida:hover {
+    background: var(--cor-primaria-suave);
+    border-color: var(--cor-primaria);
+    transform: translateY(-2px);
+}
+
+.acao-rapida i {
+    font-size: 20px;
+    color: var(--cor-primaria);
+}
+
+.acao-rapida span {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+/* -----------------------------------------------------
+   CARTÃO DE BOAS-VINDAS (usado no perfil "paciente")
+----------------------------------------------------- */
+.boas-vindas {
+    background: linear-gradient(120deg, var(--cor-primaria-suave), transparent);
+    margin-bottom: var(--esp-lg);
+}
+
+.boas-vindas .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+}
+
+.boas-vindas h2 {
+    font-family: var(--font-titulo);
+    font-size: var(--texto-lg);
+}
+
+/* -----------------------------------------------------
+   ICONE DE ATIVIDADE (bolinha colorida na lista)
+----------------------------------------------------- */
+.icone-atividade {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--cor-primaria-suave);
+    color: var(--cor-primaria);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    font-size: 16px;
+}

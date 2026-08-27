@@ -1,0 +1,80 @@
+/* =====================================================================
+   PACIENTE-DETALHES.CSS — Estilo da página de Detalhes do Paciente
+   ---------------------------------------------------------------
+   Compõe o "cartão de cabeçalho" (foto grande + dados do paciente)
+   e a grade de 2 colunas abaixo (abaixo, cada cartão usa a base).
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   CARTÃO DE CABEÇALHO DO PACIENTE
+   Foto à esquerda, nome e badges no meio, botões à direita.
+----------------------------------------------------- */
+.perfil-perfil {
+    padding: var(--esp-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--esp-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--esp-md);  /* parte do mesmo painel do perfil */
+}
+
+/* Foto grande do paciente */
+.perfil-perfil img {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--borda-lg);
+    object-fit: cover;
+    flex: none;
+}
+
+/* Nome + subtítulo */
+.perfil-perfil h3 {
+    font-family: var(--font-titulo);
+    font-size: var(--texto-lg);
+    line-height: 1.1;
+}
+.perfil-perfil p {
+    color: var(--cor-texto-secundario);
+    font-size: var(--texto-sm);
+    margin-top: 2px;
+}
+
+/* Nome do meio empurra os botões para a direita */
+.perfil-perfil .meio {
+    flex: 1;
+}
+
+/* -----------------------------------------------------
+   GRADE DE CARTÕES ABAIXO DO PERFIL (informações do paciente)
+----------------------------------------------------- */
+.grade-info {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;   /* dados pessoais + histórico */
+    gap: var(--esp-md);
+    margin-bottom: var(--esp-lg);
+}
+
+@media (max-width: 1000px) {
+    .grade-info { grid-template-columns: 1fr; }
+}
+
+.item-dado {
+    margin-bottom: var(--esp-md);
+}
+.item-dado label {
+    display: block;
+    font-size: var(--texto-xs);
+    color: var(--cor-texto-secundario);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.item-dado strong {
+    font-size: var(--texto-sm);
+}
+
+/* Resumo de consultas por status (mini legenda) */
+.resumo-status {
+    display: flex;
+    gap: var(--esp-sm);
+    flex-wrap: wrap;
+}

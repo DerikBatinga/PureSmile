@@ -1,0 +1,27 @@
+/* =====================================================================
+   CONFIGURACOES.CSS — Estilo exclusivo da página de Configurações
+   ---------------------------------------------------------------------
+   Base (abas, formulários, tabela, avisos) vem de components.css.
+   Aqui fica só o visual da lista de usuários (com "chave" de admin).
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   ÍCONE GRANDE DE CADA SEÇÃO (usado dentro das abas)
+----------------------------------------------------- */
+.config-icone {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--borda-md);
+    background: var(--cor-primaria-suave);
+    color: var(--cor-primaria);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+}
+
+/* Estica o painel até a borda do cartão (efeito "mesa" na listagem) */
+.tabela-enrole.usuarios-lista {
+    margin: 0 calc(-1 * var(--esp-lg));
+}
