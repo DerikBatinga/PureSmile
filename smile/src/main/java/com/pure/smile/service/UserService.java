@@ -30,8 +30,7 @@ public class UserService {
     }
     public int atualizar(UserModel u){
         buscarPorId(u.getIdUser());
-        return userRepository.save(u);
-    }
+        return userRepository.save(u);}
     public int deletar(Long id){
       buscarPorId(id);
       return userRepository.delete(id);

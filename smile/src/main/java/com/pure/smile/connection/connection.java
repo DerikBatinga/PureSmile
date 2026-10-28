@@ -5,32 +5,31 @@ import java.sql.*;
 
 public class connection {
     Dotenv dotenv = Dotenv.load();
-
-    final String driver = "com.mysql.jdbc.Driver";
-    final String url = "jdbc:mysql://127..0.0.1/clients";
+    final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    final String url = "jdbc:sqlserver://localhost:1433;databaseName=puresmile;encrypt=true;trustServerCertificate=true";
     final String user = dotenv.get("DB_MYSQLROOTUSERNAME");
     final String password = dotenv.get("DB_MYSQLROOTPASSWORD");
     private Connection connectionDB;
     public Statement statement;
     public ResultSet resultSet;
 
-    public boolean connection () {
-        boolean isConnected = true;
+    public boolean connection () throws SQLException {
         try {
             Class.forName(driver);
-            connectionDB = DriverManager.getConnection("url", user, password);
+            connectionDB = DriverManager.getConnection(url, user, password);
             System.out.println("DB connection started");
-
-        }catch(ClassNotFoundException e){
+            return true;
+        }
+        catch(ClassNotFoundException e){
             System.out.println("Invalid Drive");
             e.printStackTrace();
+            return false;
         }
         catch (SQLException e) {
-            System.out.println("Invalid URL");
+            System.out.println("Falha ao conectar" + e.getMessage());
             e.printStackTrace();
-            isConnected = false;
+            return false;
         }
-        return isConnected;
     }
 
     public void desconnection(){
@@ -50,9 +49,5 @@ public class connection {
             System.out.println("SQL command invalid!");
             e.printStackTrace();
         }
-    }
-
-    public String getPassword() {
-        return password;
     }
 }
