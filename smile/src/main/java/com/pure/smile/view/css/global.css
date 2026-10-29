@@ -1,0 +1,115 @@
+:root {
+
+    /* ===== CORES ===== */
+    --cor-fundo: #F9F9FB;
+    --cor-superficie: #FFFFFF;
+    --cor-card: #FFFFFF;
+
+    --cor-primaria: #394E6E;
+    --cor-primaria-hover: #2E405B;
+    --cor-primaria-suave: rgba(57, 78, 110, 0.12); /* anel/fundo translúcido da primária */
+
+    --cor-secundaria: #A0ADC2;
+    --cor-terciaria: #DCE4EF;
+
+    --cor-texto: #1E2A3F;
+    --cor-texto-secundario: #64748B;
+    --cor-texto-claro: #A0ADC2;
+
+    --cor-sucesso: #6BCB77;
+    --cor-aviso: #FFB84D;
+    --cor-erro: #EF4444;
+
+    --cor-borda: #E7EAF2;
+
+    /* ===== BRANCOS (texto sobre o gradiente escuro da marca) ===== */
+    --cor-branco: #FFFFFF;
+    --cor-branco-suave: rgba(255, 255, 255, 0.75);   /* parágrafos */
+    --cor-branco-fosco: rgba(255, 255, 255, 0.65);   /* estatísticas */
+    --cor-branco-apagado: rgba(255, 255, 255, 0.45); /* legendas menores */
+
+    /* ===== TIPOGRAFIA ===== */
+    --font-titulo: 'Poppins', sans-serif;
+    --font-texto: 'Inter', sans-serif;
+
+    --texto-xs: 0.75rem;     /* 12px */
+    --texto-sm: 0.875rem;    /* 14px */
+    --texto-md: 1rem;        /* 16px */
+    --texto-lg: 1.25rem;     /* 20px */
+    --texto-xl: 1.5rem;      /* 24px */
+    --texto-xxl: 2rem;       /* 32px */
+
+    /* ===== ESPAÇAMENTOS ===== */
+    --esp-xs: 4px;
+    --esp-sm: 8px;
+    --esp-md: 16px;
+    --esp-lg: 24px;
+    --esp-xl: 32px;
+    --esp-xxl: 48px;
+
+    /* ===== BORDAS ===== */
+    --borda-xs: 2px;
+    --borda-sm: 8px;
+    --borda-md: 12px;
+    --borda-lg: 20px;
+    --borda-pill: 999px;
+
+    /* ===== SOMBRAS ===== */
+    --sombra-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --sombra-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --sombra-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    /* ===== TRANSIÇÕES ===== */
+    --transicao-rapida: 0.2s ease;
+    --transicao-padrao: 0.3s ease;
+    --transicao-lenta: 0.5s ease;
+}
+
+[data-theme="dark"] {
+
+    /* ===== CORES ===== */
+    --cor-fundo: #111827;
+    --cor-superficie: #1F2937;
+    --cor-card: #374151;
+
+    --cor-primaria: #5E81AC;
+    --cor-primaria-hover: #7195BE;
+    --cor-primaria-suave: rgba(94, 129, 172, 0.18); /* anel/fundo translúcido da primária */
+
+    --cor-secundaria: #D1D5DB;
+    --cor-terciaria: #374151;
+
+    --cor-texto: #F9FAFB;
+    --cor-texto-secundario: #D1D5DB;
+    --cor-texto-claro: #9CA3AF;
+
+    --cor-borda: #3E4B5E;
+
+    /* ===== FEEDBACK ===== */
+    --cor-sucesso: #6BCB77;
+    --cor-aviso: #FFB84D;
+    --cor-erro: #EF4444;
+
+    /* ===== SOMBRAS ===== */
+    --sombra-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --sombra-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --sombra-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* altura/largura incluem borda e padding */
+}
+body {
+    font-family: var(--font-texto);
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+    transition: background var(--transicao-padrao), color var(--transicao-padrao);
+}
+
+p {
+    font-size: var(--texto-md);
+    font-family: var(--font-texto);
+}

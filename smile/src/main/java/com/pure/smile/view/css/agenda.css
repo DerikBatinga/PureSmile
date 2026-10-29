@@ -1,0 +1,270 @@
+/* =====================================================================
+   AGENDA.CSS — Grade de horários (calendário semanal e diário)
+   ---------------------------------------------------------------------
+   A grade é montada pelo JS/agenda.js. Este CSS define o visual:
+   - toolbar (toggle Semanal/Diário + legenda)
+   - cabeçalho dos dias
+   - coluna de horários
+   - colunas dos dias com eventos posicionados por top/height
+   Os botões (.btn, .btn-acento) e o modal vêm de components.css.
+   ===================================================================== */
+
+/* ---------- Toolbar ----------
+   Barra acima da grade com toggle Semanal/Diário, legenda de status
+   e botão "Agendar consulta".
+===================================================================== */
+.agenda-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--esp-lg);
+    flex-wrap: wrap;
+    gap: var(--esp-md);
+}
+
+.agenda-toolbar__left {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-lg);
+    flex-wrap: wrap;
+}
+
+/* Toggle Semanal / Diário */
+.agenda-view-switch {
+    display: flex;
+    gap: 4px;
+    background: var(--cor-terciaria);
+    border-radius: var(--borda-md);
+    padding: 4px;
+}
+
+.agenda-view-switch button {
+    border: none;
+    background: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+}
+
+.agenda-view-switch button.is-active {
+    background: var(--cor-superficie);
+    color: var(--cor-primaria);
+    box-shadow: var(--sombra-sm);
+}
+
+/* Legenda de status */
+.agenda-legend {
+    display: flex;
+    gap: var(--esp-md);
+    flex-wrap: wrap;
+}
+
+.agenda-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--cor-texto-secundario);
+}
+
+.agenda-legend i {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.dot--confirmada   { background: var(--cor-primaria); }
+.dot--em-andamento { background: #B36A00; }
+.dot--concluida    { background: #2E8A44; }
+.dot--cancelada    { background: var(--cor-texto-claro); }
+
+/* ---------- Grade de horários ----------
+   Grid: 64px (coluna de horas) + 7 colunas de 1fr.
+   Em telas pequenas a grade rola horizontalmente.
+===================================================================== */
+.calendar {
+    display: grid;
+    grid-template-columns: 64px repeat(7, 1fr);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--borda-lg);
+    overflow-x: auto;              /* rola para os lados se faltar espaço */
+    background: var(--cor-superficie);
+    max-width: 100%;
+}
+
+/* Visão DIÁRIA: uma única coluna de dia (lá fora a largura de 7) */
+.calendar.visao-dia {
+    grid-template-columns: 64px 1fr;
+}
+
+/* Largura mínima evita que as colunas espremam no desktop */
+.calendar.visao-semana {
+    min-width: 760px;
+}
+
+/* ---------- Cabeçalho dos dias ---------- */
+.cal-head {
+    padding: var(--esp-sm) var(--esp-xs);
+    text-align: center;
+    border-bottom: 1px solid var(--cor-borda);
+    border-left: 1px solid var(--cor-borda);
+    background: var(--cor-terciaria);
+    white-space: nowrap;
+}
+
+.cal-head:first-child {
+    border-left: none;
+}
+
+.cal-head strong {
+    display: block;
+    font-family: var(--font-titulo);
+    font-size: var(--texto-sm);
+    font-weight: 700;
+    color: var(--cor-texto);
+}
+
+.cal-head span {
+    font-size: 11px;
+    color: var(--cor-texto-secundario);
+}
+
+/* Dia atual: fundo translúcido da primária */
+.cal-head.is-today {
+    background: var(--cor-primaria-suave);
+}
+
+.cal-head.is-today strong {
+    color: var(--cor-primaria);
+}
+
+/* ---------- Coluna de horários ---------- */
+.cal-time-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.cal-time-slot {
+    height: 76px;
+    text-align: right;
+    padding-right: 8px;
+    font-size: 10.5px;
+    color: var(--cor-texto-claro);
+    border-top: 1px solid var(--cor-borda);
+    transform: translateY(-6px);
+    white-space: nowrap;
+}
+
+.cal-time-slot:first-child {
+    border-top: none;
+}
+
+/* ---------- Coluna de cada dia ----------
+   Posiciona eventos absolutamente. Linhas horizontais a cada 76px
+   guiam o olho para o horário correto.
+===================================================================== */
+.cal-day-col {
+    position: relative;
+    border-left: 1px solid var(--cor-borda);
+    min-height: 912px;             /* 12 horários × 76px */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 75px,
+        var(--cor-borda) 75px,
+        var(--cor-borda) 76px
+    );
+}
+
+/* Destaque ao arrastar um evento sobre a coluna */
+.cal-day-col.drag-over {
+    background-color: var(--cor-primaria-suave);
+}
+
+/* ---------- Evento (consulta) ----------
+   Posição (top) e altura (height) são calculadas pelo JS com base no
+   horário e na duração. A borda esquerda escura dá profundidade.
+===================================================================== */
+.cal-event {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    cursor: grab;
+    overflow: hidden;
+    box-shadow: var(--sombra-sm);
+    border-left: 3px solid rgba(0, 0, 0, 0.15);
+    transition: transform var(--transicao-rapida), opacity var(--transicao-rapida);
+}
+
+/* Aviso visual de que o card está sendo arrastado */
+.cal-event.is-arrastando {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.cal-event:hover {
+    transform: scale(1.02);
+    z-index: 5;
+}
+
+.cal-event span {
+    display: block;
+    font-weight: 400;
+    font-size: 10px;
+    opacity: 0.9;
+}
+
+/* Status: confirmada = cor primária */
+.cal-event.st-confirmada {
+    background: var(--cor-primaria);
+}
+
+/* Status: em andamento = âmbar escuro */
+.cal-event.st-em-andamento {
+    background: #B36A00;
+}
+
+/* Status: concluída = verde */
+.cal-event.st-concluida {
+    background: #2E8A44;
+}
+
+/* Status: cancelada = cinza + tachado */
+.cal-event.st-cancelada {
+    background: var(--cor-texto-claro);
+    text-decoration: line-through;
+}
+
+/* ---------- Hint abaixo da grade ---------- */
+.agenda-hint {
+    margin-top: var(--esp-md);
+    font-size: var(--texto-xs);
+    color: var(--cor-texto-secundario);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ---------- Scrollbar da grade ---------- */
+.calendar::-webkit-scrollbar {
+    height: 8px;
+}
+
+.calendar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.calendar::-webkit-scrollbar-thumb {
+    background: var(--cor-borda);
+    border-radius: 99px;
+}

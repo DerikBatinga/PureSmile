@@ -2,7 +2,6 @@ package com.pure.smile.service;
 
 import com.pure.smile.model.UserModel;
 import com.pure.smile.repository.UserRepository;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +21,11 @@ public class UserService {
         return userRepository.readAll();
     }
     public UserModel buscarPorId(Long id){
-        try {
-            return userRepository.readId(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new RegraDeNegocioException("User com ID:" + id+ " não encontrado");
+        List<UserModel> usuarios = userRepository.readId(id);
+        if (usuarios.isEmpty()) {
+            throw new IllegalArgumentException("User com ID:" + id + " não encontrado");
         }
+        return usuarios.get(0);
     }
     public int atualizar(UserModel u){
         buscarPorId(u.getIdUser());
@@ -36,8 +35,8 @@ public class UserService {
       return userRepository.delete(id);
     }
     public void validarCpf(String CPF){
-        if (CPF.isBlank() || CPF.matches("\\d{11}")){
-            throw new RegraDeNegocioException("O CPF "+ CPF + "está vazio ou mal formatado");
+        if (CPF == null || CPF.isBlank() || !CPF.matches("\\d{11}")){
+            throw new IllegalArgumentException("O CPF "+ CPF + " está vazio ou mal formatado");
         }
     }
 }

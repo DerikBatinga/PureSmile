@@ -1,0 +1,19 @@
+/* =====================================================================
+   PACIENTES.CSS — Estilo exclusivo da página de Pacientes
+   ---------------------------------------------------------------------
+   Aqui só fica o que é PRÓPRIO desta tela. A base (tabelas,
+   chips de filtro, modais, botões) vem de components.css.
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   PAINEL PRINCIPAL: envolve a barra de filtros e a tabela
+   Overflow escondido respeita as bordas arredondadas.
+----------------------------------------------------- */
+.painel-pacientes {
+    overflow: hidden;
+}
+
+/* Dentro do painel, a barra de filtros ganha respiro */
+.painel-pacientes .barra-tabela {
+    padding: var(--esp-lg) var(--esp-lg) 0;
+}

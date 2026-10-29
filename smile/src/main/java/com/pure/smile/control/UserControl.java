@@ -29,13 +29,13 @@ public class UserControl {
         return ResponseEntity.ok(userService.buscarPorId(id));
      }
 
-    @GetMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody UserModel user){
         user.setIdUser(id);
         userService.atualizar(user);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> Deletar (@PathVariable Long id){
         userService.deletar(id);
         return ResponseEntity.noContent().build();

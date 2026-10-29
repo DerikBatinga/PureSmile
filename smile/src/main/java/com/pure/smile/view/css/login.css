@@ -1,0 +1,375 @@
+@keyframes balancar{
+    0%   { transform: rotate(0deg); }     /* repouso */
+    25%  { transform: rotate(-12deg); }   /* inclina esquerda */
+    75%  { transform: rotate(12deg); }    /* inclina direita */
+    100% { transform: rotate(0deg); }     /* volta */
+}
+
+@keyframes brilhar{
+    0%   { background-position: -200% 0; }  /* luz fora, à esquerda */
+    100% { background-position: 200% 0; }   /* luz fora, à direita */
+}
+
+@keyframes girar-icone{
+    0%   { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg);}
+}
+
+.login-shell {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr; /* esquerda um pouco maior */
+    min-height: 100dvh; 
+}
+
+/* Coluna da esquerda — branding */
+.login-brand{
+    position:relative; 
+    overflow:hidden;
+    isolation: isolate;   /* os círculos decorativos não vão além da coluna */
+    background: radial-gradient(1200px 600px at 15% 10%, rgba(94,129,172,.35), transparent 60%),
+                linear-gradient(160deg, var(--cor-primaria) 0%, #22314A 100%);
+    display:flex; 
+    flex-direction:column; 
+    justify-content:space-between;
+    padding:var(--esp-xxl) var(--esp-xxl);
+    color: var(--cor-branco);
+}
+
+/* Círculos decorativos gigantes, semi-transparentes, cortados pela borda */
+.login-brand::before,
+.login-brand::after{
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* Círculo do canto superior direito */
+.login-brand::before{
+    width: 600px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.04);
+    top: -250px;
+    right: -250px;
+}
+
+/* Círculo do canto inferior esquerdo */
+.login-brand::after{
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.03);
+    bottom: -250px;
+    left: -250px;
+}
+
+.login-brand_top{
+    display: flex;
+    align-items: center;
+    gap: var(--esp-sm);
+}
+
+.login-brand_top img{
+    height: auto;
+    width: 100px;
+    margin: -32px -20px -30px -40px;
+}
+
+.login-brand_top strong{
+    font-family: var(--font-titulo);
+    font-size: var(--texto-md);
+}
+
+.login-brand_top span{
+    display: block;
+    font-size: var(--texto-sm);
+    color: var(--cor-branco-apagado);
+}
+
+
+.dente-sorridente{
+    display: inline-block;
+    font-size: 180px;
+    transform-origin: bottom center;
+
+    /* A "pintura" por trás do dente: gradiente com a faixa de luz no meio */
+    background-image: linear-gradient(
+        110deg,
+        rgba(255,255,255,0.4) 0%,
+        rgba(255,255,255,0.4) 40%,
+        #FFFFFF 50%,
+        rgba(255,255,255,0.4) 60%,
+        rgba(255,255,255,0.4) 100%
+    );
+    background-size: 200% 100%;   /* o dobro da largura: dá espaço pra deslizar */
+
+    /* Recorta a pintura no formato do dente e apaga o glyph original */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Duas animações em paralelo: geometria (girar) + pintura (brilho) */
+    animation:
+        balancar 2.5s ease-in-out infinite,
+        brilhar 3s ease-in-out infinite;
+}
+
+.login-brand_mid {
+    max-width: 460px;
+    margin-bottom: var(--esp-lg);
+}
+
+.login-brand_mid h1{
+    font-family: var(--font-titulo);
+    color: var(--cor-branco);
+    font-size: var(--texto-xxl);
+    font-weight: bold;
+    line-height: 1.15;
+    margin-bottom: var(--esp-sm);
+}
+
+.login-brand_mid p{
+    font-family: var(--font-texto);
+    font-weight: bolder;
+    color: var(--cor-branco-suave);
+    font-size: var(--texto-md);
+}
+
+
+.login-brand_stats{
+    display: flex;
+    gap: var(--esp-xl);
+}
+
+.login-brand_stats div strong {
+    display: block;
+    font-family: var(--font-titulo);
+    font-size: var(--texto-xl);
+}
+.login-brand_stats div span {
+    font-size: var(--texto-xs);
+    color: var(--cor-branco-fosco);
+}
+
+/* Coluna da direita — login */
+
+.login-form-side{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--cor-fundo);
+}
+
+.theme-toggle-standalone{
+    position: absolute;
+    top: var(--esp-lg);
+    right: var(--esp-lg);
+}
+
+/* Botão circular de ícone (toggle de tema) */
+.icon-btn{
+    width: 38px;
+    height: 38px;
+    border-radius: var(--borda-md);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--cor-texto-secundario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+}
+
+.icon-btn:hover{
+    background: var(--cor-terciaria);
+    color: var(--cor-texto);
+}
+
+/* Ícone dentro do botão gira suavemente ao passar o mouse */
+.icon-btn:hover i{
+    animation: girar-icone 0.75s ease-in-out;
+}
+
+.login-card {
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-card_eyebrow{
+    font-size: var(--texto-xs);
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cor-primaria);
+    margin-bottom: var(--esp-sm);
+}
+
+.login-card h2{
+    font-family: var(--font-titulo);
+    font-size: var(--texto-xxl);
+    margin-bottom: var(--esp-sm);
+}
+
+.login-card_sub{
+    color: var(--cor-texto-secundario);
+    font-size: var(--texto-sm);
+    margin-bottom: var(--esp-sm);
+}
+
+.role-picker{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 chips lado a lado */
+    gap: 8px;
+    margin-bottom: var(--esp-lg);
+}
+
+.role-chip{
+    display: flex;
+    flex-direction: column;    /* ícone em cima, texto embaixo */
+    align-items: center;
+    gap: 6px;
+    padding: 12px 6px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: var(--borda-md);
+    cursor: pointer;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    text-align: center;
+    background: var(--cor-card);
+}
+
+.role-chip.is-active{
+    border-color: var(--cor-primaria);
+    background: var(--cor-primaria-suave);
+    color: var(--cor-primaria);
+}
+
+.role-chip:hover{
+    border-color: var(--cor-primaria);
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--esp-md);
+}
+
+.field label{
+    font-size: var(--texto-xs);
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+}
+
+.input-icon{
+    position: relative;
+}
+
+.input-icon input{
+    padding-left: 40px;
+}
+
+.input-icon i{
+    position: absolute;
+    color: var(--cor-texto-claro);
+    font-size: 17px;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);   /* centraliza verticalmente */
+}
+
+.input{
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: var(--borda-md);
+    border: 1.5px solid var(--cor-borda);
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+    font-family: var(--font-texto);
+    font-size: var(--texto-sm);
+    transition: all var(--transicao-rapida);
+}
+
+.input:focus{
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 4px var(--cor-primaria-suave);
+}
+
+.checkbox-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--texto-sm);
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+}
+.checkbox-row input{
+    accent-color: var(--cor-primaria);  /* cor do "tick" */
+    width: 16px;
+    height: 16px;
+}
+
+.btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: var(--borda-md);
+    border: 1px solid transparent;
+    font-family: var(--font-texto);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-accent{
+    background: linear-gradient(135deg, var(--cor-primaria), #22314A);
+    color: #fff;
+    box-shadow: var(--sombra-md);
+}
+.btn-block{
+    width: 100%;
+}
+
+.login-options{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -4px 0 var(--esp-lg);
+}
+.login-options a{
+    font-size: var(--texto-xs);
+    color: var(--cor-primaria);
+    font-weight: 600;
+    text-decoration: none;
+}
+.login-options a:hover{
+    text-decoration: underline;
+}
+
+.input-icon .toggle-senha{
+    left: auto;       /* anula o left: 14px dos outros ícones */
+    right: 10px;
+    cursor: pointer;
+}
+
+.login-footer-note{
+    margin-top: var(--esp-xl);
+    text-align: center;
+    font-size: 11px;
+    color: var(--cor-texto-claro);
+}
+
+/* Em telas menores que 940px, esconde a coluna de branding
+   e mostra só o formulário. */
+@media (max-width: 940px){
+    .login-shell{
+        grid-template-columns: 1fr;   /* só uma coluna */
+    }
+    .login-brand{
+        display: none;                /* o branding some */
+    }
+}
