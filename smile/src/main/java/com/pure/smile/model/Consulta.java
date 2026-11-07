@@ -1,33 +1,41 @@
 package com.pure.smile.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Consulta {
-    private Long idConvenio;
-    private String nome;
-    private String cnpj;
-    private String email;
-    private String status;
+    private Long idConsulta;
+    private Long idPaciente;
+    private Long idDentista;
+    private LocalDateTime dataConsulta;
+    private Status statusConsulta;
+    private String observacao;
 
     public Consulta() {
-
     }
 
-    public Consulta(Long idConvenio, String nome, String cnpj, String email, String status) {
-        this.idConvenio = idConvenio;
-        this.nome = nome;
-        this.cnpj = cnpj;
-        this.email = email;
-        this.status = status;
-    }
-//    Só criando a classe, tem que ajustar
-    public boolean verificaConvenio(Consulta consulta) {
-        return true;
+    public Consulta(Long idConsulta, Long idPaciente, Long idDentista, LocalDateTime dataConsulta, Status statusConsulta, String observacao) {
+        this.idConsulta = idConsulta;
+        this.idPaciente = idPaciente;
+        this.idDentista = idDentista;
+        this.dataConsulta = dataConsulta;
+        this.statusConsulta = statusConsulta;
+        this.observacao = observacao;
     }
 
-    public void ativar(Consulta consulta) {
-
+    public void concluirConsulta(){
+        this.statusConsulta = Status.valueOf("CONCLUIDO");
     }
 
-    public void desativar(Consulta consulta) {
+    public void cancelarConsulta(){
+        this.statusConsulta = Status.valueOf("CANCELADO");
+    }
 
+    public void planejarConsulta(){
+        this.statusConsulta = Status.valueOf("PLANEJADO");
+    }
+
+    public void em_andamentoConsulta(){
+        this.statusConsulta = Status.valueOf("EM_ANDAMENTO");
     }
 }

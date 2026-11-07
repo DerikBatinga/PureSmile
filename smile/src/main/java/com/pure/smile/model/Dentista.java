@@ -17,7 +17,7 @@ public class Dentista extends Usuario {
         return true;
     }
 
-    public void registrarAtendimento(Consulta consulta) {
+    public void registrarAtendimento(Convenio consulta) {
 
     }
 }
