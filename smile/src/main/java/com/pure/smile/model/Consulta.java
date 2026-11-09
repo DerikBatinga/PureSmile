@@ -1,41 +1,35 @@
 package com.pure.smile.model;
 
-import java.time.LocalDate;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Consulta {
     private Long idConsulta;
     private Long idPaciente;
     private Long idDentista;
     private LocalDateTime dataConsulta;
-    private Status statusConsulta;
+    private Status statusConsulta = Status.PENDENTE;
     private String observacao;
 
-    public Consulta() {
+    public void concluirConsulta() {
+        this.statusConsulta = Status.CONCLUIDO;
     }
 
-    public Consulta(Long idConsulta, Long idPaciente, Long idDentista, LocalDateTime dataConsulta, Status statusConsulta, String observacao) {
-        this.idConsulta = idConsulta;
-        this.idPaciente = idPaciente;
-        this.idDentista = idDentista;
-        this.dataConsulta = dataConsulta;
-        this.statusConsulta = statusConsulta;
-        this.observacao = observacao;
+    public void cancelarConsulta() {
+        this.statusConsulta = Status.CANCELADO;
     }
 
-    public void concluirConsulta(){
-        this.statusConsulta = Status.valueOf("CONCLUIDO");
+    public void planejarConsulta() {
+        this.statusConsulta = Status.PLANEJADO;
     }
 
-    public void cancelarConsulta(){
-        this.statusConsulta = Status.valueOf("CANCELADO");
-    }
-
-    public void planejarConsulta(){
-        this.statusConsulta = Status.valueOf("PLANEJADO");
-    }
-
-    public void em_andamentoConsulta(){
-        this.statusConsulta = Status.valueOf("EM_ANDAMENTO");
+    public void emAndamentoConsulta() {
+        this.statusConsulta = Status.EM_ANDAMENTO;
     }
 }

@@ -1,39 +1,32 @@
 package com.pure.smile.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Procedimento {
     private Long idProcedimento;
     private String nome;
     private String descricao;
     private double preco;
-    private Status statusProcedimento;
+    private Status statusProcedimento = Status.PENDENTE;
 
-    public Procedimento() {
-
+    public void concluirProcedimento() {
+        this.statusProcedimento = Status.CONCLUIDO;
     }
 
-    public Procedimento(Long idProcedimento, String nome, String descricao, double preco,  Status status) {
-        this.idProcedimento = idProcedimento;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.statusProcedimento = status;
+    public void cancelarProcedimento() {
+        this.statusProcedimento = Status.CANCELADO;
     }
 
-    public void concluirProcedimento(){
-        this.statusProcedimento = Status.valueOf("CONCLUIDO");
+    public void planejarProcedimento() {
+        this.statusProcedimento = Status.PLANEJADO;
     }
 
-    public void cancelarProcedimento(){
-        this.statusProcedimento = Status.valueOf("CANCELADO");
+    public void emAndamentoProcedimento() {
+        this.statusProcedimento = Status.EM_ANDAMENTO;
     }
-
-    public void planejarProcidimento(){
-        this.statusProcedimento = Status.valueOf("PLANEJADO");
-    }
-
-    public void em_andamentoProcedimento(){
-        this.statusProcedimento = Status.valueOf("EM_ANDAMENTO");
-    }
-
-
 }

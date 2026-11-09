@@ -1,44 +1,40 @@
 package com.pure.smile.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tratamento {
     private Long idTratamento;
     private String descricao;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
-    private Status statusTratamento;
+    private Status statusTratamento = Status.PENDENTE;
     private int quantidade;
+    private double valorUnitario;
 
-    public Tratamento() {
+    public void concluirTratamento() {
+        this.statusTratamento = Status.CONCLUIDO;
     }
 
-    public Tratamento(Long idTratamento, String descricao, LocalDateTime dataInicio, LocalDateTime dataFim, Status status, int quantidade) {
-        this.idTratamento = idTratamento;
-        this.descricao = descricao;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-        this.statusTratamento = status;
-        this.quantidade = quantidade;
+    public void cancelarTratamento() {
+        this.statusTratamento = Status.CANCELADO;
     }
 
-    public void concluirTratamento(){
-        this.statusTratamento = Status.valueOf("CONCLUIDO");
+    public void planejarTratamento() {
+        this.statusTratamento = Status.PLANEJADO;
     }
 
-    public void cancelarTratamento(){
-        this.statusTratamento = Status.valueOf("CANCELADO");
+    public void emAndamentoTratamento() {
+        this.statusTratamento = Status.EM_ANDAMENTO;
     }
 
-    public void planejarTratamento(){
-        this.statusTratamento = Status.valueOf("PLANEJADO");
-    }
-
-    public void em_andamentoTratamento(){
-        this.statusTratamento = Status.valueOf("EM_ANDAMENTO");
-    }
-
-    public double calcularValorTotal(){
-        return this.quantidade * this.dataInicio.getSecond();
+    public double calcularValorTotal() {
+        return this.quantidade * this.valorUnitario;
     }
 }

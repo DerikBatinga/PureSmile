@@ -1,33 +1,28 @@
 package com.pure.smile.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Convenio {
     private Long idConvenio;
     private String nome;
     private String cnpj;
     private String email;
-    private String status;
+    private Status status = Status.PENDENTE;
 
-    public Convenio() {
-
-    }
-
-    public Consulta(Long idConvenio, String nome, String cnpj, String email, String status) {
-        this.idConvenio = idConvenio;
-        this.nome = nome;
-        this.cnpj = cnpj;
-        this.email = email;
-        this.status = status;
-    }
-    //    Só criando a classe, tem que ajustar
     public boolean verificaConvenio(Convenio convenio) {
         return true;
     }
 
-    public void ativar(Convenio convenio) {
-
+    public void ativar() {
+        this.status = Status.CONCLUIDO;
     }
 
-    public void desativar(Convenio convenio) {
-
+    public void desativar() {
+        this.status = Status.CANCELADO;
     }
 }
