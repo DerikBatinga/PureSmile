@@ -1,10 +1,12 @@
 package com.pure.smile.repository;
 
+import com.pure.smile.enums.UsuarioRole;
 import com.pure.smile.model.UserModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,33 +22,34 @@ public class UserRepository {
     //Lambda, se não conhece pesquise
 
     private final RowMapper <UserModel> rowMapper = (rs, rowNum) -> new UserModel( //Precisa ter mesmo nome do bd
-     rs.getLong("id_user"),
-            rs.getString("first_name"),
-            rs.getString("second_name"),
-            rs.getString("cpf"),
-            rs.getString("gender"),
-            rs.getDate("birthday"),
-            rs.getString("email")
+            rs.getLong("id_user"),
+            rs.getString("nome"),
+            rs.getString("email"),
+            rs.getString("senha"),
+            rs.getDate("nascimento"),
+            UsuarioRole.valueOf(rs.getString("role")),
+            rs.getBoolean("ativo"),
+            rs.getObject("data_criacao", LocalDateTime.class)
     );
 
-    public int save(UserModel u){
-         String query = "INSERT INTO tb_user(first_name, second_name, cpf, gender, birthday, email) VALUES( ?, ?, ?, ?, ?, ?)";
-         return jdbcTemplate.update(query, u.getFirstName(), u.getSecondName(), u.getCpf(), u.getGender(), u.getBirthday(), u.getEmail());
+    public int saveUser(UserModel u){
+        String query = "INSERT INTO dbo.User(nome, email, nascimento, role, ativo) VALUES( ?, ?, ?, ?)";
+        return jdbcTemplate.update(query, u.getNome(), u.getEmail(), u.getDataNasc(), u.getRole());
     }
     public List<UserModel> readAll(){
-        String query = "SELECT * FROM tb_user";
+        String query = "SELECT * FROM dbo.User";
         return jdbcTemplate.query(query, rowMapper);
     }
-    public List<UserModel> readId(Long id){
-        String query = "SELECT * FROM tb_user WHERE id_user = ?";
+    public List<UserModel> readUser(Long id){
+        String query = "SELECT * FROM dbo.User WHERE id_user = ?";
         return jdbcTemplate.query(query, rowMapper, id);
     }
-    public int update(UserModel u){
-        String query = "UPDATE tb_user SET first_name = ?, second_name = ?, cpf = ?, gender = ?, birthday = ?, email = ? WHERE id_user = ?";
-        return jdbcTemplate.update(query, u.getFirstName(),u.getSecondName(),u.getCpf(),u.getGender(),u.getBirthday(),u.getEmail(),u.getIdUser());
+    public int updateUser(UserModel u){
+        String query = "UPDATE dbo.User SET nome = ?, email = ?, nascimento = ?, role = ? WHERE id_user = ?";
+        return jdbcTemplate.update(query,u.getNome(), u.getEmail(), u.getDataNasc(), u.getRole(), u.getIdUser());
     }
-    public int delete (Long id){
-        String query = "DELETE FROM tb_user WHERE id_user = ?";
+    public int deleteUser (Long id){
+        String query = "DELETE FROM dbo.User WHERE id_user = ?";
         return jdbcTemplate.update(query, id);
     }
 }
