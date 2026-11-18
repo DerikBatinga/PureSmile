@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Smile — Pacientes</title>
+
+    <!-- Folhas de estilo na ordem: variáveis → moldura → componentes → desta página -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/shell.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pacientes.css">
+
+    <!-- Ícones e fontes -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800"
+          rel="stylesheet">
+
+    <!-- Aplica o tema salvo antes de desenhar a página -->
+    <script>
+        const tema = localStorage.getItem('ps-tema')
+        document.documentElement.setAttribute('data-theme', tema || 'dark')
+    </script>
+</head>
+<body>
+
+<!-- Moldura fixa: sidebar + topbar + conteúdo -->
+<div class="app-shell" id="ps-app-shell">
+    <aside class="sidebar" id="ps-sidebar"></aside>
+    <div>
+        <header class="topbar" id="ps-topbar"></header>
+
+        <main class="content">
+            <!-- Cartão que envolve toda a listagem -->
+            <div class="cartao painel-pacientes">
+
+                <!-- Barra de ferramentas: filtros à esquerda, busca e botão à direita -->
+                <div class="barra-tabela">
+                    <div class="filtro-grupo">
+                        <button class="filtro-chip ativo" data-status="todos"><i class="ri-list-check-2"></i> Todos</button>
+                        <button class="filtro-chip" data-status="ativo"><i class="ri-checkbox-circle-line"></i> Ativos</button>
+                        <button class="filtro-chip" data-status="pendente"><i class="ri-time-line"></i> Pendentes</button>
+                        <button class="filtro-chip" data-status="inativo"><i class="ri-pause-circle-line"></i> Inativos</button>
+                    </div>
+
+                    <div class="flex flex-centro gap-sm">
+                        <!-- Busca por nome ou CPF -->
+                        <div class="buscar-campo">
+                            <i class="ri-search-line"></i>
+                            <input type="text" id="buscaPaciente" placeholder="Buscar por nome ou CPF...">
+                        </div>
+
+                        <!-- Abre o modal de cadastro -->
+                        <button class="btn btn-acento" id="btnNovoPaciente">
+                            <i class="ri-user-add-line"></i> Novo Paciente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabela de pacientes (as linhas são montadas pelo JS) -->
+                <div class="tabela-enrole">
+                    <table class="lista">
+                        <thead>
+                            <tr>
+                                <th>Paciente</th>
+                                <th>CPF</th>
+                                <th>Telefone</th>
+                                <th>Convênio</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoPacientes"></tbody>
+                    </table>
+                </div>
+
+                <!-- Estado vazio (aparece só quando a busca/filtro não acha nada) -->
+                <div class="vazio" id="pacientesVazio" hidden>
+                    <i class="ri-search-eye-line"></i>
+                    <h4>Nenhum paciente encontrado</h4>
+                    <p>Tente ajustar a busca ou os filtros aplicados.</p>
+                    <button class="btn btn-secundario btn-pequeno" id="btnLimparFiltros">Limpar filtros</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- ------------------------------------------------------------------
+     MODAL DE NOVO PACIENTE
+     .modal-fundo cobre a tela; .definicoes-itens mostra o conteúdo.
+     Fica escondido até o JS adicionar a classe "aberto".
+------------------------------------------------------------------- -->
+<div class="modal-fundo" id="modalNovoPaciente">
+    <div class="modal modal-ampla">
+        <div class="modal-cabecalho">
+            <div>
+                <h3>Novo paciente</h3>
+                <p>Preencha os dados abaixo para cadastrar um novo paciente na clínica.</p>
+            </div>
+            <button class="fechar-modal" data-fechar-modal><i class="ri-close-line"></i></button>
+        </div>
+
+        <!-- Formulário de cadastro -->
+        <form class="modal-corpo" id="formNovoPaciente">
+            <div class="grade-form">
+                <div class="campo dupla">
+                    <label>Nome completo</label>
+                    <input class="input" id="fNovaNome" placeholder="Ex: Marina Souza Alves" required>
+                </div>
+                <div class="campo">
+                    <label>CPF</label>
+                    <input class="input" id="fNovaCpf" placeholder="000.000.000-00" required>
+                </div>
+                <div class="campo">
+                    <label>Data de nascimento</label>
+                    <input class="input" type="date" id="fNovaNascimento" required>
+                </div>
+                <div class="campo">
+                    <label>Telefone</label>
+                    <input class="input" id="fNovaTelefone" placeholder="(11) 99999-0000" required>
+                </div>
+                <div class="campo">
+                    <label>Convênio</label>
+                    <select class="input" id="fNovaConvenio">
+                        <option>Particular</option>
+                        <option>Amil Dental</option>
+                        <option>SulAmérica Odonto</option>
+                        <option>Bradesco Dental</option>
+                    </select>
+                </div>
+                <div class="campo dupla">
+                    <label>E-mail</label>
+                    <input class="input" type="email" id="fNovaEmail" placeholder="paciente@email.com">
+                </div>
+                <div class="campo dupla">
+                    <label>Observações</label>
+                    <textarea class="input" placeholder="Alergias, histórico relevante, preferências..."></textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal-rodape">
+            <button class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button class="btn btn-primario" id="btnSalvarPaciente"><i class="ri-save-3-line"></i> Salvar paciente</button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts na ordem: base → layout → dados → auxiliares → página -->
+<script src="../JS/main.js"></script>
+<script src="../JS/layout.js"></script>
+<script src="../JS/dados.js"></script>
+<script src="../JS/auxiliares.js"></script>
+<script src="../JS/pacientes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</body>
+</html>

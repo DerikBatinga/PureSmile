@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Smile — Meu Perfil</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/shell.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/perfil.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800">
+
+    <script>
+        const tema = localStorage.getItem('ps-tema')
+        document.documentElement.setAttribute('data-theme', tema || 'dark')
+    </script>
+</head>
+<body>
+
+<div class="app-shell" id="ps-app-shell">
+    <aside class="sidebar" id="ps-sidebar"></aside>
+    <div>
+        <header class="topbar" id="ps-topbar"></header>
+
+        <main class="content">
+            <!-- O JS monta o conteúdo aqui a partir do usuário logado -->
+            <div id="conteudoPerfil"></div>
+        </main>
+    </div>
+</div>
+
+<script src="../JS/main.js"></script>
+<script src="../JS/layout.js"></script>
+<script src="../JS/dados.js"></script>
+<script src="../JS/auxiliares.js"></script>
+<script src="../JS/perfil.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</body>
+</html>

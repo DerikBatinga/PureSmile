@@ -1,0 +1,35 @@
+/* =====================================================================
+   PAGAMENTOS.CSS — Estilo exclusivo da página de Pagamentos
+   ---------------------------------------------------------------------
+   Base (stats, gráfico, tabela, chips, modal) vem de components.css.
+   Aqui só entra: layout das colunas do topo + lista de métodos.
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   TOPO: coluna do gráfico (4/5) + coluna dos métodos (1/5)
+----------------------------------------------------- */
+.pagamentos-colunas {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--esp-md);
+    margin-bottom: var(--esp-lg);
+}
+
+@media (max-width: 1000px) {
+    .pagamentos-colunas { grid-template-columns: 1fr; }
+}
+
+/* Faixa de progresso de cada método de pagamento */
+.metodo-bar {
+    height: 6px;
+    border-radius: var(--borda-pill);
+    background: var(--cor-terciaria);
+    overflow: hidden;
+    margin-top: 6px;
+}
+.metodo-bar span {
+    display: block;
+    height: 100%;
+    border-radius: var(--borda-pill);
+    background: linear-gradient(90deg, var(--cor-primaria), #5E81AC);
+}

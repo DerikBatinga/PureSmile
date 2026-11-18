@@ -1,0 +1,43 @@
+/* =====================================================================
+   PROCEDIMENTOS.CSS — Estilo exclusivo da página de Procedimentos
+   ---------------------------------------------------------------------
+   A base (stats, tabela, chips, modal) vem de components.css.
+   Aqui só entra o que é específico desta tela: o bloco de resumo,
+   o balão de filtro e o visual do "novo procedimento".
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   TITULO DAS DUAS COLUNAS DO RESUMO (Receita x Custo)
+----------------------------------------------------- */
+.resumo-titulo {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-sm);
+    font-family: var(--font-titulo);
+    font-size: var(--texto-sm);
+    margin-bottom: var(--esp-sm);
+}
+
+/* -----------------------------------------------------
+   LISTA DE VALORES DO RESUMO (Rótulo | Valor)
+----------------------------------------------------- */
+.resumo-valor {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--esp-sm);
+    font-size: var(--texto-sm);
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--cor-borda);   /* linha pontilhada */
+}
+.resumo-valor:last-child { border-bottom: none; }
+.resumo-valor strong { color: var(--cor-texto); }
+
+/* -----------------------------------------------------
+   PAINEL PRINCIPAL
+----------------------------------------------------- */
+.painel-procedimentos {
+    overflow: hidden;
+}
+.painel-procedimentos .barra-tabela {
+    padding: var(--esp-lg) var(--esp-lg) 0;
+}

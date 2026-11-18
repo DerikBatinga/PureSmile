@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Smile — Procedimentos</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/shell.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/procedimentos.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800">
+
+    <script>
+        const tema = localStorage.getItem('ps-tema')
+        document.documentElement.setAttribute('data-theme', tema || 'dark')
+    </script>
+</head>
+<body>
+
+<div class="app-shell" id="ps-app-shell">
+    <aside class="sidebar" id="ps-sidebar"></aside>
+    <div>
+        <header class="topbar" id="ps-topbar"></header>
+
+        <main class="content">
+            <!-- Resumo estatístico e tabela carregados pelo JS -->
+            <div id="conteudoProcedimentos"></div>
+        </main>
+    </div>
+</div>
+
+<!-- MODAL: registrar novo procedimento -->
+<div class="modal-fundo" id="modalNovoProcedimento">
+    <div class="modal modal-ampla">
+        <div class="modal-cabecalho">
+            <div>
+                <h3>Novo procedimento</h3>
+                <p>Registre um procedimento clínico e quanto ele movimentou na receita.</p>
+            </div>
+            <button class="fechar-modal" data-fechar-modal><i class="ri-close-line"></i></button>
+        </div>
+
+        <form class="modal-corpo" id="formNovoProcedimento">
+            <div class="grade-form">
+                <div class="campo dupla">
+                    <label>Paciente</label>
+                    <select class="input" id="fProcPaciente"></select>
+                </div>
+                <div class="campo">
+                    <label>Tipo</label>
+                    <select class="input" id="fProcTipo">
+                        <option>Limpeza</option>
+                        <option>Canal</option>
+                        <option>Extração</option>
+                        <option>Ortodontia</option>
+                        <option>Implante</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label>Valor (R$)</label>
+                    <input class="input" type="number" id="fProcValor" min="0" step="10" placeholder="0,00" required>
+                </div>
+                <div class="campo dupla">
+                    <label>Observações</label>
+                    <textarea class="input" placeholder="Descrição do procedimento..."></textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal-rodape">
+            <button class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button class="btn btn-primario" id="btnSalvarProcedimento"><i class="ri-save-3-line"></i> Salvar procedimento</button>
+        </div>
+    </div>
+</div>
+
+<script src="../JS/main.js"></script>
+<script src="../JS/layout.js"></script>
+<script src="../JS/dados.js"></script>
+<script src="../JS/auxiliares.js"></script>
+<script src="../JS/procedimentos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</body>
+</html>

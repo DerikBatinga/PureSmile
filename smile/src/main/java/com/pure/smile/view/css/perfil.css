@@ -1,0 +1,41 @@
+/* =====================================================================
+   PERFIL.CSS — Estilo exclusivo da página de Perfil
+   ---------------------------------------------------------------------
+   Base (cartões, abas, formulários) vem de components.css.
+   Aqui fica o cabeçalho do perfil (foto + nome + ações).
+   ===================================================================== */
+
+/* -----------------------------------------------------
+   CABEÇALHO DO PERFIL (foto grande + nome + perfil)
+----------------------------------------------------- */
+.perfil-cap {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-lg);
+    padding: var(--esp-lg);
+}
+
+.perfil-cap img {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+    border: 3px solid var(--cor-primaria-suave);
+}
+
+.perfil-cap h3 {
+    font-family: var(--font-titulo);
+    font-size: var(--texto-lg);
+}
+
+.perfil-cap p {
+    color: var(--cor-texto-secundario);
+    font-size: var(--texto-sm);
+    margin-top: 4px;
+}
+
+/* Empurra as ações para a direita */
+.perfil-cap .meio {
+    flex: 1;
+}
