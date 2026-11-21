@@ -2,6 +2,7 @@ package com.pure.smile.repository;
 
 import com.pure.smile.enums.UsuarioRole;
 import com.pure.smile.model.DentistaModel;
+import com.pure.smile.model.PacienteModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class DentistaRepository {
@@ -41,6 +43,9 @@ public class DentistaRepository {
     public int saveDentista(Long idUser, DentistaModel d) {
         String sql = "INSERT INTO dbo.Dentista (id_user, cro, telefone, especialidade) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(sql, idUser, d.getCro(), d.getTelefone(), d.getEspecialidade());
+    }
+    public List<DentistaModel> readAll(){
+        return jdbcTemplate.query(SQL_JOIN, rowMapper);
     }
     public DentistaModel readId(Long id) {
         // o mesmo SELECT com JOIN, terminando em: WHERE d.id_dentista = ?

@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -18,29 +21,37 @@ public class TratamentoRepository {
             rs.getString("nome"),
             rs.getString("descricao"),
             rs.getString("status"),
-            rs.getDate("data_inicio"),
-            rs.getDate("data_fim"),
+            rs.getObject("data_inicio", LocalDateTime.class),
+            rs.getObject("data_fim", LocalDateTime.class),
+            rs.getDouble("pagamento"),
+            rs.getObject("data_pagamento", LocalDateTime.class),
             rs.getLong("id_paciente")
     );
 
     public int saveTratamento(TratamentoModel t){
-        String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_fim, id_paciente) VALUES( ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, t.getNome(), t.getDescricao(), t.getStatus(), t.getData_fim(), t.getIdPaciente());
+        String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_fim, pagamento, data_pagamento, id_paciente) VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(query, t.getNome(), t.getDescricao(), t.getStatus(), t.getDataFim(), t.getPagamento(), t.getDataPagamento(), t.getIdPaciente());
     }
     public List<TratamentoModel> readAll(){
         String query = "SELECT * FROM dbo.Tratamento";
         return jdbcTemplate.query(query, rowMapper);
     }
-    public List<TratamentoModel> readTratamento(Long id){
+    public TratamentoModel readTratamento(Long id){
         String query = "SELECT * FROM dbo.Tratamento WHERE id_tratamento = ?";
-        return jdbcTemplate.query(query, rowMapper, id);
+        return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateTratamento(TratamentoModel t){
         String query = "UPDATE dbo.Tratamento SET nome = ?, descricao = ?, status = ?, data_fim = ?, id_paciente = ? WHERE id_paciente = ?";
-        return jdbcTemplate.update(query, t.getNome(),t.getDescricao(),t.getStatus(),t.getData_fim(),t.getIdPaciente(),t.getIdPaciente());
+        return jdbcTemplate.update(query, t.getNome(),t.getDescricao(),t.getStatus(),t.getDataFim(),t.getIdPaciente(),t.getIdPaciente());
     }
     public int deleteTratamento (Long id){
         String query = "DELETE FROM dbo.Tratamento WHERE id_tratamento = ?";
         return jdbcTemplate.update(query, id);
+    }
+
+    public int registrarPagamento(Long idTratamento, BigDecimal valorPago, LocalDateTime dataPagamento) {
+        String sql = "UPDATE dbo.Tratamento SET data_pagamento = ?, valor_pago = ? "
+                + "WHERE id_tratamento = ? AND data_pagamento IS NULL";
+        return jdbcTemplate.update(sql, dataPagamento, valorPago, idTratamento);
     }
 }

@@ -5,16 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsultaModel {
-    private long idConsulta;
+    private Long idConsulta;
     private String observacoes;
     private ConsultaStatus status;
-    private Date dataConsulta;
-    private long idPaciente;
-    private long idDentista;
+    private LocalDateTime dataConsulta;
+    private Long idPaciente;
+    private Long idDentista;
 }

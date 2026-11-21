@@ -40,9 +40,9 @@ public class UserRepository {
         String query = "SELECT * FROM dbo.User";
         return jdbcTemplate.query(query, rowMapper);
     }
-    public List<UserModel> readUser(Long id){
+    public UserModel readUser(Long id){
         String query = "SELECT * FROM dbo.User WHERE id_user = ?";
-        return jdbcTemplate.query(query, rowMapper, id);
+        return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateUser(UserModel u){
         String query = "UPDATE dbo.User SET nome = ?, email = ?, nascimento = ?, role = ? WHERE id_user = ?";
@@ -51,5 +51,9 @@ public class UserRepository {
     public int deleteUser (Long id){
         String query = "DELETE FROM dbo.User WHERE id_user = ?";
         return jdbcTemplate.update(query, id);
+    }
+    public int desativar(Long idUser) {
+        String sql = "UPDATE dbo.Usuario SET ativo = 0 WHERE id_usuario = ?";
+        return jdbcTemplate.update(sql, idUser);
     }
 }

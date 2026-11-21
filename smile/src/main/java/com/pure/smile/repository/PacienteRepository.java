@@ -2,11 +2,13 @@ package com.pure.smile.repository;
 
 import com.pure.smile.enums.UsuarioRole;
 import com.pure.smile.model.PacienteModel;
+import com.pure.smile.model.UserModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class PacienteRepository {
@@ -43,11 +45,14 @@ JOIN dbo.Usuario u ON u.id_usuario = p.id_usuario
         String sql = "INSERT INTO dbo.Paciente (id_usuario, cpf, sexo, telefone, data_nasc, id_convenio) VALUES (?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql, idUser);
     }
+    public List<PacienteModel> readAll(){
+        return jdbcTemplate.query(SQL_JOIN, rowMapper);
+    }
     public PacienteModel readId(Long id) {
         // o mesmo SELECT com JOIN, terminando em: WHERE d.id_dentista = ?
         return jdbcTemplate.queryForObject(SQL_JOIN + " WHERE p.id_paciente = ?", rowMapper, id);
     }
-    public int updateDentista(PacienteModel d) {
+    public int updatePaciente(PacienteModel d) {
         String sql = "UPDATE dbo.Paciente SET cpf = ?, sexo = ?, telefone = ?, data_nasc = ?, id_convenio = ? WHERE id_paciente = ?";
         return jdbcTemplate.update(sql, d.getCpf(), d.getSexo(), d.getTelefone(), d.getDataNasc(), d.getIdConvenio());
     }

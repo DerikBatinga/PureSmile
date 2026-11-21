@@ -35,9 +35,9 @@ public class ConvenioRepository {
         String query = "SELECT * FROM dbo.Convenio";
         return jdbcTemplate.query(query, rowMapper);
     }
-    public List<ConvenioModel> readConvenio(long id){
+    public ConvenioModel readConvenio(Long id){
         String query = "SELECT * FROM dbo.Convenio WHERE id_convenio = ?";
-        return jdbcTemplate.query(query, rowMapper, id);
+        return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateConvenio(ConvenioModel c){
         String query = "UPDATE dbo.Convenio SET nome = ?, email = ?, telefone = ?, cpnj = ?, ativo = ?, cobertura_descricao = ? WHERE id_user = ?";
@@ -46,5 +46,10 @@ public class ConvenioRepository {
     public int deleteConvenio(long id){
         String query = "DELETE FROM dbo.Convenio WHERE id_convenio = ?";
         return jdbcTemplate.update(query, id);
+    }
+
+    public int desativar(Long idConvenio) {
+        String sql = "UPDATE dbo.Convenio SET ativo = 0 WHERE id_convenio = ?";
+        return jdbcTemplate.update(sql, idConvenio);
     }
 }

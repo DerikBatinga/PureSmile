@@ -7,7 +7,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class DentistaModel extends UserModel{
-    private long idDentista;
+    private Long idDentista;
     private String cro;
     private String telefone;
     private String especialidade;

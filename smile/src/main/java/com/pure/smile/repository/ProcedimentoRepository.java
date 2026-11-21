@@ -31,9 +31,9 @@ public class ProcedimentoRepository {
         String query = "SELECT * FROM dbo.Procedimento";
         return jdbcTemplate.query(query, rowMapper);
     }
-    public List<ProcedimentoModel> readProcedimento(Long id) {
+    public ProcedimentoModel readProcedimento(Long id) {
         String query = "SELECT * FROM dbo.Procedimento WHERE id_procedimento = ? ";
-        return jdbcTemplate.query(query, rowMapper, id);
+        return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
 
     public int updateProcedimento(ProcedimentoModel p) {
