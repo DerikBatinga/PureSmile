@@ -56,4 +56,5 @@ public class UserRepository {
         String sql = "UPDATE dbo.Usuario SET ativo = 0 WHERE id_usuario = ?";
         return jdbcTemplate.update(sql, idUser);
     }
+
 }
