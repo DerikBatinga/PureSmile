@@ -9,9 +9,9 @@ import org.jspecify.annotations.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcedimentoModel {
-    private long idProcedimento;
+    private Long idProcedimento;
     private String nome;
     private String descricao;
-    private double valor;
-    private long idUser;
+    private Double valor;
+    private Long idUser;
 }
