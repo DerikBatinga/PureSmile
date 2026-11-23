@@ -24,8 +24,8 @@ public class ProcedimentoRepository {
     );
 
     public int saveProcedimento(ProcedimentoModel p) {
-        String query = "INSERT INTO dbo.Procedimento (nome, descricao, valor, id_user) VALUES (?,?,?,?)";
-        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor(), p.getIdUser());
+        String query = "INSERT INTO dbo.Procedimento (nome, descricao, valor, id_user) VALUES (?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor(), p.getIdUser(), rowMapper);
     }
     public List<ProcedimentoModel> readAll(){
         String query = "SELECT * FROM dbo.Procedimento";

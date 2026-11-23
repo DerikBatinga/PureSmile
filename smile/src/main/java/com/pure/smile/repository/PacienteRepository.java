@@ -18,10 +18,10 @@ public class PacienteRepository {
 
 
     final static String SQL_JOIN = """
-SELECT u.id_usuario, u.nome, u.email, u.ativo, u.data_criacao,
+SELECT u.id_user, u.nome, u.email, u.ativo, u.data_criacao,
        p.id_paciente, p.cpf, p.sexo, p.telefone, p.data_nasc, p.id_convenio
 FROM dbo.Paciente p
-JOIN dbo.Usuario u ON u.id_usuario = p.id_usuario
+JOIN dbo.User u ON u.id_user = p.id_user
     """;
 
     RowMapper<PacienteModel> rowMapper = (rs, rowNum) -> {
@@ -42,7 +42,7 @@ JOIN dbo.Usuario u ON u.id_usuario = p.id_usuario
     };
 
     public int savePaciente(Long idUser, PacienteModel p) {
-        String sql = "INSERT INTO dbo.Paciente (id_usuario, cpf, sexo, telefone, data_nasc, id_convenio) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Paciente (id_user, cpf, sexo, telefone, data_nasc, id_convenio) VALUES (?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql, idUser);
     }
     public List<PacienteModel> readAll(){

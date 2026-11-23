@@ -28,8 +28,8 @@ public class ConvenioRepository {
     );
 
     public int saveConvenio(ConvenioModel c){
-        String query = "INSERT INTO dbo.Convenio(nome, email, telefone, cnpj, cobertura_descricao) VALUES(? , ?, ?, ?, ?, ?);";
-        return jdbcTemplate.update(query, c.getIdConvenio(), c.getNome(), c.getEmail(), c.getTelefone(), c.getCnpj(), c.getCoberturaDescricao(), rowMapper);
+        String query = "INSERT INTO dbo.Convenio(nome, email, telefone, cnpj, cobertura_descricao) VALUES(?, ?, ?, ?, ?);";
+        return jdbcTemplate.update(query, c.getNome(), c.getEmail(), c.getTelefone(), c.getCnpj(), c.getCoberturaDescricao(), rowMapper);
     }
     public List<ConvenioModel> readAll(){
         String query = "SELECT * FROM dbo.Convenio";

@@ -1,6 +1,6 @@
 package com.pure.smile.dto.response;
 
-import com.pure.smile.model.StatusPagamento;
+import com.pure.smile.enums.TratamentoPagamento;
 import com.pure.smile.enums.TratamentoStatus;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -18,5 +18,5 @@ public class TratamentoResponse {
 
     // ─── CAMPOS DE PAGAMENTO ───
     private double valorTotal;
-    private StatusPagamento statusPagamento;
+    private TratamentoPagamento tratamentoPagamento;
 }

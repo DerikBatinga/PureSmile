@@ -1,8 +1,10 @@
 package com.pure.smile.dto.request;
 
-import com.pure.smile.model.StatusPagamento;
+import com.pure.smile.enums.TratamentoPagamento;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -28,5 +30,5 @@ public class TratamentoRequest {
     private double valorTotal;
 
     @NotNull(message = "Status de pagamento é obrigatório")
-    private StatusPagamento statusPagamento;
+    private TratamentoPagamento TratamentoPagamento;
 }

@@ -29,8 +29,8 @@ public class TratamentoRepository {
     );
 
     public int saveTratamento(TratamentoModel t){
-        String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_fim, pagamento, data_pagamento, id_paciente) VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, t.getNome(), t.getDescricao(), t.getStatus(), t.getDataFim(), t.getPagamento(), t.getDataPagamento(), t.getIdPaciente());
+        String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_inicio, data_fim, data_pagamento, id_paciente) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(query, t.getNome(), t.getDescricao(), t.getStatus(), t.getDataInicio(), t.getDataFim(), t.getDataPagamento(), t.getIdPaciente());
     }
     public List<TratamentoModel> readAll(){
         String query = "SELECT * FROM dbo.Tratamento";
@@ -41,8 +41,8 @@ public class TratamentoRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateTratamento(TratamentoModel t){
-        String query = "UPDATE dbo.Tratamento SET nome = ?, descricao = ?, status = ?, data_fim = ?, id_paciente = ? WHERE id_paciente = ?";
-        return jdbcTemplate.update(query, t.getNome(),t.getDescricao(),t.getStatus(),t.getDataFim(),t.getIdPaciente(),t.getIdPaciente());
+        String query = "UPDATE dbo.Tratamento SET nome = ?, descricao = ?, status = ?, data_inicio = ?, data_fim = ?, pagamento = ?, data_pagamento = ?, id_paciente = ? WHERE id_paciente = ?";
+        return jdbcTemplate.update(query, t.getNome(),t.getDescricao(),t.getStatus(), t.getDataInicio(), t.getDataFim(), t.getPagamento(), t.getDataPagamento(), t.getIdPaciente(),t.getIdPaciente());
     }
     public int deleteTratamento (Long id){
         String query = "DELETE FROM dbo.Tratamento WHERE id_tratamento = ?";

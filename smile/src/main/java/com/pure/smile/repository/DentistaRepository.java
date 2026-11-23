@@ -19,10 +19,10 @@ public class DentistaRepository {
     public DentistaRepository(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate;}
 
     final static String SQL_JOIN = """
-    SELECT u.id_usuario, u.nome, u.email, u.role, u.ativo, u.data_criacao,
+    SELECT u.id_user, u.nome, u.email, u.role, u.ativo, u.data_criacao,
            d.id_dentista, d.cro, d.telefone, d.especialidade
     FROM dbo.Dentista d
-    JOIN dbo.Usuario u ON u.id_usuario = d.id_usuario
+    JOIN dbo.User u ON u.id_user = d.id_user
     """;
 
     RowMapper<DentistaModel> rowMapper = (rs, rowNum) -> {
