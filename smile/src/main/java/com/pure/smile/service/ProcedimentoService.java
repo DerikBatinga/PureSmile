@@ -16,9 +16,10 @@ public class ProcedimentoService {
         this.repository = repository;
     }
 
-    public void criar(ProcedimentoModel p) {
+    public ProcedimentoModel criar(ProcedimentoModel p) {
         validar(p);
-        repository.saveProcedimento(p);
+        p.setIdProcedimento(repository.saveProcedimento(p));
+        return p;
     }
 
     public List<ProcedimentoModel> listarTodos() {
@@ -33,11 +34,12 @@ public class ProcedimentoService {
         }
     }
 
-    public void atualizar(Long id, ProcedimentoModel p) {
+    public ProcedimentoModel atualizar(Long id, ProcedimentoModel p) {
         buscarPorId(id);
         validar(p);
         p.setIdProcedimento(id);
         repository.updateProcedimento(p);
+        return p;
     }
 
     public void excluir(Long id) {

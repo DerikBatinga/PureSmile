@@ -15,5 +15,6 @@ public class ProcedimentoRequest {
 
     @NotNull(message = "Preço é obrigatório!")
     @DecimalMin(value = "0.00", message = "Preço não pode ser negativo")
+    @Digits(integer = 8, fraction = 2, message = "Preço deve ter até 8 dígitos inteiros e 2 casas decimais")
     private BigDecimal preco;
 }

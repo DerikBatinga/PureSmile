@@ -10,10 +10,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,8 +23,13 @@ import java.util.Date;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @Transactional
 class RepositoryIntegrationTests {
     @DynamicPropertySource
@@ -58,6 +65,41 @@ class RepositoryIntegrationTests {
     @Autowired PacienteService pacienteService;
     @Autowired DentistaService dentistaService;
     @Autowired PasswordEncoder passwordEncoder;
+    @Autowired MockMvc mvc;
+
+    @Test
+    void apiDeProcedimentosFazCrudComAutenticacaoEValidacao() throws Exception {
+        mvc.perform(get("/api/procedimentos")).andExpect(status().isUnauthorized());
+
+        String nome = "Procedimento API " + UUID.randomUUID();
+        String criar = "{\"nome\":\"" + nome + "\",\"descricao\":\"Descrição inicial\",\"preco\":75.50}";
+        String location = mvc.perform(post("/api/procedimentos").with(user("teste"))
+                        .contentType(APPLICATION_JSON).content(criar))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.nome").value(nome))
+                .andExpect(jsonPath("$.preco").value(75.50))
+                .andReturn().getResponse().getHeader("Location");
+        assertNotNull(location);
+        long id = Long.parseLong(location.substring(location.lastIndexOf('/') + 1));
+
+        mvc.perform(get("/api/procedimentos/{id}", id).with(user("teste")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.nome").value(nome));
+        mvc.perform(get("/api/procedimentos").with(user("teste")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].idProcedimento").exists());
+
+        String atualizar = "{\"nome\":\"Atualizado\",\"preco\":80.00}";
+        mvc.perform(put("/api/procedimentos/{id}", id).with(user("teste"))
+                        .contentType(APPLICATION_JSON).content(atualizar))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.preco").value(80.00));
+        mvc.perform(post("/api/procedimentos").with(user("teste"))
+                        .contentType(APPLICATION_JSON).content("{\"nome\":\"Inválido\",\"preco\":-1}"))
+                .andExpect(status().isBadRequest());
+
+        mvc.perform(delete("/api/procedimentos/{id}", id).with(user("teste")))
+                .andExpect(status().isNoContent());
+        mvc.perform(get("/api/procedimentos/{id}", id).with(user("teste")))
+                .andExpect(status().isNotFound());
+    }
 
     @Test
     void servicosCriamPerfisComSenhaCodificada() {
@@ -158,7 +200,9 @@ class RepositoryIntegrationTests {
         ProcedimentoModel procedimento = new ProcedimentoModel();
         procedimento.setNome("Limpeza teste " + sufixo);
         procedimento.setValor(new BigDecimal("123.45"));
-        assertEquals(1, procedimentos.saveProcedimento(procedimento));
+        Long idProcedimento = procedimentos.saveProcedimento(procedimento);
+        assertNotNull(idProcedimento);
+        assertEquals("Limpeza teste " + sufixo, procedimentos.readProcedimento(idProcedimento).getNome());
         ProcedimentoModel procedimentoSalvo = procedimentos.readAll().stream()
                 .filter(p -> procedimento.getNome().equals(p.getNome())).findFirst().orElseThrow();
         assertEquals(0, new BigDecimal("123.45").compareTo(procedimentoSalvo.getValor()));

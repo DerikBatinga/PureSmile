@@ -3,8 +3,11 @@ package com.pure.smile.repository;
 import com.pure.smile.model.ProcedimentoModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
@@ -15,16 +18,28 @@ public class ProcedimentoRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public RowMapper<ProcedimentoModel> rowMapper = (rs, rowNum) -> new ProcedimentoModel(
+    private final RowMapper<ProcedimentoModel> rowMapper = (rs, rowNum) -> new ProcedimentoModel(
             rs.getLong("id_procedimento"),
             rs.getString("nome"),
             rs.getString("descricao"),
             rs.getBigDecimal("valor")
     );
 
-    public int saveProcedimento(ProcedimentoModel p) {
+    public Long saveProcedimento(ProcedimentoModel p) {
         String query = "INSERT INTO dbo.Procedimento (nome, descricao, valor) VALUES (?, ?, ?)";
-        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(query, new String[]{"id_procedimento"});
+            ps.setString(1, p.getNome());
+            ps.setString(2, p.getDescricao());
+            ps.setBigDecimal(3, p.getValor());
+            return ps;
+        }, keyHolder);
+        Number id = keyHolder.getKey();
+        if (id == null) {
+            throw new IllegalStateException("O banco não retornou o ID do procedimento criado");
+        }
+        return id.longValue();
     }
     public List<ProcedimentoModel> readAll(){
         String query = "SELECT * FROM dbo.Procedimento";
