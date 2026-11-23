@@ -4,8 +4,11 @@ import com.pure.smile.enums.UsuarioRole;
 import com.pure.smile.model.UserModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,9 +35,26 @@ public class UserRepository {
             rs.getObject("data_criacao", LocalDateTime.class)
     );
 
-    public int saveUser(UserModel u){
-        String query = "INSERT INTO dbo.User(nome, email, nascimento, role, ativo) VALUES( ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, u.getNome(), u.getEmail(), u.getDataNasc(), u.getRole());
+    public Long saveUser(UserModel u){
+        String query = "INSERT INTO dbo.[User] (nome, email, senha, nascimento, role, ativo) VALUES (?, ?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(query, new String[]{"id_user"});
+            ps.setString(1, u.getNome());
+            ps.setString(2, u.getEmail());
+            ps.setString(3, u.getSenha());
+            ps.setDate(4, u.getDataNasc() == null ? null : new java.sql.Date(u.getDataNasc().getTime()));
+            ps.setString(5, u.getRole().name());
+            ps.setBoolean(6, u.isAtivo());
+            return ps;
+        }, keyHolder);
+
+        Number id = keyHolder.getKey();
+        if (id == null) {
+            throw new IllegalStateException("O banco não retornou o ID do usuário criado");
+        }
+        return id.longValue();
     }
     public List<UserModel> readAll(){
         String query = "SELECT * FROM dbo.User";

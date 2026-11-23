@@ -3,7 +3,6 @@ package com.pure.smile.dto.request;
 import com.pure.smile.enums.TratamentoPagamento;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 

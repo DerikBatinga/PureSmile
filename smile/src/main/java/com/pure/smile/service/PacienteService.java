@@ -7,6 +7,7 @@ import com.pure.smile.service.exception.RegraDeNegocioException.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class PacienteService {
             throw new ValidacaoException("Uma Senha é obrigatória");
         }
         validar(p);
-        p.setSenha(passwordEncoder.passwordEncoder(p.getSenha()));
+        p.setSenha(passwordEncoder.encode(p.getSenha()));
         Long idUsuario = userRepository.saveUser(p);
         pacienteRepository.savePaciente(idUsuario, p);
     }

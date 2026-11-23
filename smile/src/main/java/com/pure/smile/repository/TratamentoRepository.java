@@ -3,10 +3,12 @@ package com.pure.smile.repository;
 import com.pure.smile.model.TratamentoModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,14 +25,32 @@ public class TratamentoRepository {
             rs.getString("status"),
             rs.getObject("data_inicio", LocalDateTime.class),
             rs.getObject("data_fim", LocalDateTime.class),
-            rs.getDouble("pagamento"),
+            rs.getBigDecimal("pagamento"),
             rs.getObject("data_pagamento", LocalDateTime.class),
             rs.getLong("id_paciente")
     );
 
-    public int saveTratamento(TratamentoModel t){
+    public Long saveTratamento(TratamentoModel t){
         String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_inicio, data_fim, data_pagamento, id_paciente) VALUES(?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, t.getNome(), t.getDescricao(), t.getStatus(), t.getDataInicio(), t.getDataFim(), t.getDataPagamento(), t.getIdPaciente());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(query, new String[]{"id_tratamento"});
+            ps.setString(1, t.getNome());
+            ps.setString(2, t.getDescricao());
+            ps.setString(3, t.getStatus());
+            ps.setObject(4, t.getDataInicio());
+            ps.setObject(5, t.getDataFim());
+            ps.setObject(6, t.getDataPagamento());
+            ps.setLong(7, t.getIdPaciente());
+            return ps;
+        }, keyHolder);
+
+        Number id = keyHolder.getKey();
+        if (id == null) {
+            throw new IllegalStateException("O banco não retornou o ID do tratamento criado");
+        }
+        return id.longValue();
     }
     public List<TratamentoModel> readAll(){
         String query = "SELECT * FROM dbo.Tratamento";

@@ -3,7 +3,7 @@ package com.pure.smile.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.pure.smile.service.exception.RegraDeNegocioException.*;
@@ -18,7 +18,7 @@ public class TratamentoModel {
  private String status;
  private LocalDateTime dataInicio;
  private LocalDateTime dataFim;
- private Double pagamento;
+ private BigDecimal pagamento;
  private LocalDateTime dataPagamento;
  private Long idPaciente;
 
