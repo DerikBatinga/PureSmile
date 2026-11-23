@@ -19,13 +19,13 @@ public class ConsultaRepository {
             rs.getLong("id_consulta"),
             rs.getString("observacoes"),
             ConsultaStatus.valueOf(rs.getString("status")),
-            rs.getObject("data_consulta",LocalDateTime.class),
+            rs.getObject("data_hora",LocalDateTime.class),
             rs.getLong("id_paciente"),
             rs.getLong("id_dentista")
     );
     public int saveConsulta(ConsultaModel c){
-        String query = "INSERT INTO dbo.Consulta (observacoes, status, data_consulta, id_paciente, id_dentista) VALUES(?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, c.getObservacoes(),c.getStatus(), c.getDataConsulta(), c.getIdPaciente(),c.getIdDentista(), rowMapper);
+        String query = "INSERT INTO dbo.Consulta (observacoes, status, data_hora, id_paciente, id_dentista) VALUES(?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(query, c.getObservacoes(), c.getStatus().name(), c.getDataConsulta(), c.getIdPaciente(), c.getIdDentista());
     }
     public List<ConsultaModel> readAll(){
         String query = "SELECT * FROM dbo.Consulta";
@@ -36,8 +36,8 @@ public class ConsultaRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateConsulta(ConsultaModel c) {
-        String query = "UPDATE dbo.Consulta SET observacoes = ?, status = ?, data_consulta = ? WHERE id_consulta = ?";
-        return jdbcTemplate.update(query, c.getObservacoes(), c.getStatus(), c.getDataConsulta(), c.getIdConsulta(), rowMapper);
+        String query = "UPDATE dbo.Consulta SET observacoes = ?, status = ?, data_hora = ?, id_paciente = ?, id_dentista = ? WHERE id_consulta = ?";
+        return jdbcTemplate.update(query, c.getObservacoes(), c.getStatus().name(), c.getDataConsulta(), c.getIdPaciente(), c.getIdDentista(), c.getIdConsulta());
     }
     public int deleteConsulta (long id){
         String query = "DELETE FROM dbo.Consulta WHERE id_consulta = ?";

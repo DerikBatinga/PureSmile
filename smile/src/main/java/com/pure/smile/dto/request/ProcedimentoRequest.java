@@ -2,6 +2,7 @@ package com.pure.smile.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import java.math.BigDecimal;
 
 @Data
 public class ProcedimentoRequest {
@@ -13,5 +14,6 @@ public class ProcedimentoRequest {
     private String descricao;
 
     @NotNull(message = "Preço é obrigatório!")
-    private double preco;
+    @DecimalMin(value = "0.00", message = "Preço não pode ser negativo")
+    private BigDecimal preco;
 }

@@ -1,6 +1,7 @@
 package com.pure.smile.service;
 
 import com.pure.smile.model.PacienteModel;
+import com.pure.smile.enums.UsuarioRole;
 import com.pure.smile.repository.PacienteRepository;
 import com.pure.smile.repository.UserRepository;
 import com.pure.smile.service.exception.RegraDeNegocioException.*;
@@ -27,10 +28,11 @@ public class PacienteService {
 
     @Transactional
     public void criar(PacienteModel p){
-        if(p.getSenha().isEmpty()){
+        if (p.getSenha() == null || p.getSenha().isBlank()) {
             throw new ValidacaoException("Uma Senha é obrigatória");
         }
         validar(p);
+        p.setRole(UsuarioRole.PACIENTE);
         p.setSenha(passwordEncoder.encode(p.getSenha()));
         Long idUsuario = userRepository.saveUser(p);
         pacienteRepository.savePaciente(idUsuario, p);
@@ -61,7 +63,13 @@ public class PacienteService {
     }
 
     public void validar(PacienteModel p){
-        if (p.getCpf().isEmpty() || p.getCpf().matches("\\d{11}")){
+        if (p.getNome() == null || p.getNome().isBlank()) {
+            throw new ValidacaoException("Nome é obrigatório");
+        }
+        if (p.getEmail() == null || !p.getEmail().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+            throw new ValidacaoException("E-mail inválido");
+        }
+        if (p.getCpf() == null || !p.getCpf().matches("\\d{11}")) {
             throw new ValidacaoException("CPF:"+p.getCpf()+"não é válido");
         }
         if (p.getIdConvenio() != null){

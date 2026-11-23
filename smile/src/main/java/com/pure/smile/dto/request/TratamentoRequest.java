@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Data
 public class TratamentoRequest {
@@ -23,10 +24,12 @@ public class TratamentoRequest {
 
     @NotNull(message = "ID do paciente é obrigatório")
     private Long idPaciente;
+    @NotNull(message = "ID da consulta é obrigatório")
+    private Long idConsulta;
 
     // ─── CAMPOS DE PAGAMENTO ───
     @NotNull(message = "Valor total é obrigatório")
-    private double valorTotal;
+    private BigDecimal valorTotal;
 
     @NotNull(message = "Status de pagamento é obrigatório")
     private TratamentoPagamento TratamentoPagamento;

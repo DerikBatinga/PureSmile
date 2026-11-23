@@ -29,7 +29,7 @@ public class ConvenioRepository {
 
     public int saveConvenio(ConvenioModel c){
         String query = "INSERT INTO dbo.Convenio(nome, email, telefone, cnpj, cobertura_descricao) VALUES(?, ?, ?, ?, ?);";
-        return jdbcTemplate.update(query, c.getNome(), c.getEmail(), c.getTelefone(), c.getCnpj(), c.getCoberturaDescricao(), rowMapper);
+        return jdbcTemplate.update(query, c.getNome(), c.getEmail(), c.getTelefone(), c.getCnpj(), c.getCoberturaDescricao());
     }
     public List<ConvenioModel> readAll(){
         String query = "SELECT * FROM dbo.Convenio";
@@ -40,8 +40,8 @@ public class ConvenioRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateConvenio(ConvenioModel c){
-        String query = "UPDATE dbo.Convenio SET nome = ?, email = ?, telefone = ?, cpnj = ?, ativo = ?, cobertura_descricao = ? WHERE id_user = ?";
-        return jdbcTemplate.update(query, c.getNome(), c.getEmail(), c.getTelefone(), c.getCnpj(), c.getCoberturaDescricao(), c.getIdConvenio(), rowMapper);
+        String query = "UPDATE dbo.Convenio SET nome = ?, email = ?, telefone = ?, cnpj = ?, ativo = ?, cobertura_descricao = ? WHERE id_convenio = ?";
+        return jdbcTemplate.update(query, c.getNome(), c.getEmail(), c.getTelefone(), c.getCnpj(), c.isAtivo(), c.getCoberturaDescricao(), c.getIdConvenio());
     }
     public int deleteConvenio(long id){
         String query = "DELETE FROM dbo.Convenio WHERE id_convenio = ?";

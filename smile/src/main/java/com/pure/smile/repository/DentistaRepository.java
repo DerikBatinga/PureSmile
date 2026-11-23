@@ -19,15 +19,15 @@ public class DentistaRepository {
     public DentistaRepository(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate;}
 
     final static String SQL_JOIN = """
-    SELECT u.id_user, u.nome, u.email, u.role, u.ativo, u.data_criacao,
+    SELECT u.id_usuario, u.nome, u.email, u.role, u.ativo, u.data_criacao,
            d.id_dentista, d.cro, d.telefone, d.especialidade
     FROM dbo.Dentista d
-    JOIN dbo.User u ON u.id_user = d.id_user
+    JOIN dbo.Usuario u ON u.id_usuario = d.id_usuario
     """;
 
     RowMapper<DentistaModel> rowMapper = (rs, rowNum) -> {
         DentistaModel d = new DentistaModel();
-        d.setIdUser(rs.getLong("id_user"));
+        d.setIdUser(rs.getLong("id_usuario"));
         d.setNome(rs.getString("nome"));
         d.setEmail(rs.getString("email"));
         d.setRole(UsuarioRole.valueOf(rs.getString("role")));
@@ -41,7 +41,7 @@ public class DentistaRepository {
     };
 
     public int saveDentista(Long idUser, DentistaModel d) {
-        String sql = "INSERT INTO dbo.Dentista (id_user, cro, telefone, especialidade) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Dentista (id_usuario, cro, telefone, especialidade) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(sql, idUser, d.getCro(), d.getTelefone(), d.getEspecialidade());
     }
     public List<DentistaModel> readAll(){

@@ -1,6 +1,7 @@
 package com.pure.smile.service;
 
 import com.pure.smile.model.DentistaModel;
+import com.pure.smile.enums.UsuarioRole;
 import com.pure.smile.repository.DentistaRepository;
 import com.pure.smile.repository.UserRepository;
 import com.pure.smile.service.exception.RegraDeNegocioException.*;
@@ -31,6 +32,7 @@ public class DentistaService {
             throw new ValidacaoException("Senha é obrigatória");
         }
         validar(d);
+        d.setRole(UsuarioRole.DENTISTA);
         d.setSenha(passwordEncoder.encode(d.getSenha()));
         Long idUsuario = userRepository.saveUser(d);
         dentistaRepository.saveDentista(idUsuario, d);

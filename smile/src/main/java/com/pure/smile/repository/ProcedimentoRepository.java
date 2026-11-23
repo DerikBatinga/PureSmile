@@ -19,13 +19,12 @@ public class ProcedimentoRepository {
             rs.getLong("id_procedimento"),
             rs.getString("nome"),
             rs.getString("descricao"),
-            rs.getDouble("valor"),
-            rs.getLong("id_user")
+            rs.getBigDecimal("valor")
     );
 
     public int saveProcedimento(ProcedimentoModel p) {
-        String query = "INSERT INTO dbo.Procedimento (nome, descricao, valor, id_user) VALUES (?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor(), p.getIdUser(), rowMapper);
+        String query = "INSERT INTO dbo.Procedimento (nome, descricao, valor) VALUES (?, ?, ?)";
+        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor());
     }
     public List<ProcedimentoModel> readAll(){
         String query = "SELECT * FROM dbo.Procedimento";
@@ -37,8 +36,8 @@ public class ProcedimentoRepository {
     }
 
     public int updateProcedimento(ProcedimentoModel p) {
-        String query = "UPDATE dbo.Procedimento SET nome = ?, descricao = ?, valor = ?, id_user = ?  WHERE id_procedimento = ? ";
-        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor(), p.getIdUser());
+        String query = "UPDATE dbo.Procedimento SET nome = ?, descricao = ?, valor = ? WHERE id_procedimento = ?";
+        return jdbcTemplate.update(query, p.getNome(), p.getDescricao(), p.getValor(), p.getIdProcedimento());
     }
 
     public int deleteProcedimento(Long id){

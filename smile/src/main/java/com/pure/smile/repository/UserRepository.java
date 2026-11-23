@@ -25,28 +25,27 @@ public class UserRepository {
     //Lambda, se não conhece pesquise
 
     private final RowMapper <UserModel> rowMapper = (rs, rowNum) -> new UserModel( //Precisa ter mesmo nome do bd
-            rs.getLong("id_user"),
+            rs.getLong("id_usuario"),
             rs.getString("nome"),
-            rs.getString("email"),
             rs.getString("senha"),
-            rs.getDate("nascimento"),
+            rs.getString("email"),
+            null,
             UsuarioRole.valueOf(rs.getString("role")),
             rs.getBoolean("ativo"),
             rs.getObject("data_criacao", LocalDateTime.class)
     );
 
     public Long saveUser(UserModel u){
-        String query = "INSERT INTO dbo.[User] (nome, email, senha, nascimento, role, ativo) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO dbo.Usuario (nome, email, senha, role, ativo) VALUES (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(query, new String[]{"id_user"});
+            PreparedStatement ps = connection.prepareStatement(query, new String[]{"id_usuario"});
             ps.setString(1, u.getNome());
             ps.setString(2, u.getEmail());
             ps.setString(3, u.getSenha());
-            ps.setDate(4, u.getDataNasc() == null ? null : new java.sql.Date(u.getDataNasc().getTime()));
-            ps.setString(5, u.getRole().name());
-            ps.setBoolean(6, u.isAtivo());
+            ps.setString(4, u.getRole().name());
+            ps.setBoolean(5, true);
             return ps;
         }, keyHolder);
 
@@ -57,19 +56,19 @@ public class UserRepository {
         return id.longValue();
     }
     public List<UserModel> readAll(){
-        String query = "SELECT * FROM dbo.User";
+        String query = "SELECT * FROM dbo.Usuario";
         return jdbcTemplate.query(query, rowMapper);
     }
     public UserModel readUser(Long id){
-        String query = "SELECT * FROM dbo.User WHERE id_user = ?";
+        String query = "SELECT * FROM dbo.Usuario WHERE id_usuario = ?";
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateUser(UserModel u){
-        String query = "UPDATE dbo.User SET nome = ?, email = ?, nascimento = ?, role = ? WHERE id_user = ?";
-        return jdbcTemplate.update(query,u.getNome(), u.getEmail(), u.getDataNasc(), u.getRole(), u.getIdUser());
+        String query = "UPDATE dbo.Usuario SET nome = ?, email = ? WHERE id_usuario = ?";
+        return jdbcTemplate.update(query, u.getNome(), u.getEmail(), u.getIdUser());
     }
     public int deleteUser (Long id){
-        String query = "DELETE FROM dbo.User WHERE id_user = ?";
+        String query = "DELETE FROM dbo.Usuario WHERE id_usuario = ?";
         return jdbcTemplate.update(query, id);
     }
     public int desativar(Long idUser) {

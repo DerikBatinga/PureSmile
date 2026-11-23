@@ -4,17 +4,22 @@ import com.pure.smile.model.ConvenioModel;
 import com.pure.smile.repository.ConvenioRepository;
 import com.pure.smile.service.exception.RegraDeNegocioException.*;
 import org.springframework.stereotype.Service;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class ConvenioService {
-    private ConvenioRepository convenioRepository;
+    private final ConvenioRepository convenioRepository;
+
+    public ConvenioService(ConvenioRepository convenioRepository) {
+        this.convenioRepository = convenioRepository;
+    }
 
     @Transactional
     public void criar(ConvenioModel c){
-      if (c.getNome().isEmpty()){
+      if (c.getNome() == null || c.getNome().isBlank()) {
         throw new RecursoNaoEncontradoException("Nome inválido");
       }
       validar(c);
@@ -26,8 +31,8 @@ public class ConvenioService {
     public ConvenioModel buscarPorId(Long id){
         try {
          return convenioRepository.readConvenio(id);
-        }catch (RecursoNaoEncontradoException e){
-            throw new ValidacaoException("id:" +id+ "não encontrado");
+        } catch (EmptyResultDataAccessException e) {
+            throw new RecursoNaoEncontradoException("Convênio " + id + " não encontrado");
         }
     }
     @Transactional
@@ -38,7 +43,7 @@ public class ConvenioService {
 
     public void desativar (Long id){convenioRepository.desativar(buscarPorId(id).getIdConvenio());}
     public void validar(ConvenioModel c){
-        if (c.getCnpj().isEmpty() || c.getCnpj().matches("\\d{11}")){
+        if (c.getCnpj() != null && !c.getCnpj().matches("\\d{14}")) {
             throw new ValidacaoException("CNPJ inválido!, verifique se digitou corretamente");
         }
     }

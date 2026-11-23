@@ -4,6 +4,7 @@ import com.pure.smile.enums.TratamentoPagamento;
 import com.pure.smile.enums.TratamentoStatus;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Data
 public class TratamentoResponse {
@@ -15,8 +16,9 @@ public class TratamentoResponse {
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private Long idPaciente;
+    private Long idConsulta;
 
     // ─── CAMPOS DE PAGAMENTO ───
-    private double valorTotal;
+    private BigDecimal valorTotal;
     private TratamentoPagamento tratamentoPagamento;
 }

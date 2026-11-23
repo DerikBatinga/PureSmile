@@ -21,6 +21,7 @@ public class TratamentoModel {
  private BigDecimal pagamento;
  private LocalDateTime dataPagamento;
  private Long idPaciente;
+ private Long idConsulta;
 
  public boolean isPago() {
   return dataPagamento != null;

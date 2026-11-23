@@ -18,15 +18,15 @@ public class PacienteRepository {
 
 
     final static String SQL_JOIN = """
-SELECT u.id_user, u.nome, u.email, u.ativo, u.data_criacao,
+SELECT u.id_usuario, u.nome, u.email, u.role, u.ativo, u.data_criacao,
        p.id_paciente, p.cpf, p.sexo, p.telefone, p.data_nasc, p.id_convenio
 FROM dbo.Paciente p
-JOIN dbo.User u ON u.id_user = p.id_user
+JOIN dbo.Usuario u ON u.id_usuario = p.id_usuario
     """;
 
     RowMapper<PacienteModel> rowMapper = (rs, rowNum) -> {
         PacienteModel p = new PacienteModel();
-        p.setIdUser(rs.getLong("id_user"));
+        p.setIdUser(rs.getLong("id_usuario"));
         p.setNome(rs.getString("nome"));
         p.setEmail(rs.getString("email"));
         p.setRole(UsuarioRole.valueOf(rs.getString("role")));
@@ -42,8 +42,8 @@ JOIN dbo.User u ON u.id_user = p.id_user
     };
 
     public int savePaciente(Long idUser, PacienteModel p) {
-        String sql = "INSERT INTO dbo.Paciente (id_user, cpf, sexo, telefone, data_nasc, id_convenio) VALUES (?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, idUser);
+        String sql = "INSERT INTO dbo.Paciente (id_usuario, cpf, sexo, telefone, data_nasc, id_convenio) VALUES (?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, idUser, p.getCpf(), p.getSexo(), p.getTelefone(), p.getDataNasc(), p.getIdConvenio());
     }
     public List<PacienteModel> readAll(){
         return jdbcTemplate.query(SQL_JOIN, rowMapper);
@@ -54,6 +54,6 @@ JOIN dbo.User u ON u.id_user = p.id_user
     }
     public int updatePaciente(PacienteModel d) {
         String sql = "UPDATE dbo.Paciente SET cpf = ?, sexo = ?, telefone = ?, data_nasc = ?, id_convenio = ? WHERE id_paciente = ?";
-        return jdbcTemplate.update(sql, d.getCpf(), d.getSexo(), d.getTelefone(), d.getDataNasc(), d.getIdConvenio());
+        return jdbcTemplate.update(sql, d.getCpf(), d.getSexo(), d.getTelefone(), d.getDataNasc(), d.getIdConvenio(), d.getIdPaciente());
     }
 }

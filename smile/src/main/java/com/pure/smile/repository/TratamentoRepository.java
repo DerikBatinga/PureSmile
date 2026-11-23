@@ -25,13 +25,14 @@ public class TratamentoRepository {
             rs.getString("status"),
             rs.getObject("data_inicio", LocalDateTime.class),
             rs.getObject("data_fim", LocalDateTime.class),
-            rs.getBigDecimal("pagamento"),
+            rs.getBigDecimal("valor_pago"),
             rs.getObject("data_pagamento", LocalDateTime.class),
-            rs.getLong("id_paciente")
+            rs.getLong("id_paciente"),
+            rs.getLong("id_consulta")
     );
 
     public Long saveTratamento(TratamentoModel t){
-        String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_inicio, data_fim, data_pagamento, id_paciente) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO dbo.Tratamento(nome, descricao, status, data_inicio, data_fim, id_paciente, id_consulta) VALUES(?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -41,8 +42,8 @@ public class TratamentoRepository {
             ps.setString(3, t.getStatus());
             ps.setObject(4, t.getDataInicio());
             ps.setObject(5, t.getDataFim());
-            ps.setObject(6, t.getDataPagamento());
-            ps.setLong(7, t.getIdPaciente());
+            ps.setLong(6, t.getIdPaciente());
+            ps.setLong(7, t.getIdConsulta());
             return ps;
         }, keyHolder);
 
@@ -61,8 +62,8 @@ public class TratamentoRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
     public int updateTratamento(TratamentoModel t){
-        String query = "UPDATE dbo.Tratamento SET nome = ?, descricao = ?, status = ?, data_inicio = ?, data_fim = ?, pagamento = ?, data_pagamento = ?, id_paciente = ? WHERE id_paciente = ?";
-        return jdbcTemplate.update(query, t.getNome(),t.getDescricao(),t.getStatus(), t.getDataInicio(), t.getDataFim(), t.getPagamento(), t.getDataPagamento(), t.getIdPaciente(),t.getIdPaciente());
+        String query = "UPDATE dbo.Tratamento SET nome = ?, descricao = ?, status = ?, data_inicio = ?, data_fim = ?, id_paciente = ?, id_consulta = ? WHERE id_tratamento = ? AND data_pagamento IS NULL";
+        return jdbcTemplate.update(query, t.getNome(), t.getDescricao(), t.getStatus(), t.getDataInicio(), t.getDataFim(), t.getIdPaciente(), t.getIdConsulta(), t.getIdTratamento());
     }
     public int deleteTratamento (Long id){
         String query = "DELETE FROM dbo.Tratamento WHERE id_tratamento = ?";

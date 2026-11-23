@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.math.BigDecimal;
 
 @Service
 public class TratamentoService {
@@ -61,11 +62,16 @@ public class TratamentoService {
     }
 
     @Transactional
-    public TratamentoModel pagar(Long id) {
+    public TratamentoModel pagar(Long id, BigDecimal valorPago) {
         TratamentoModel t = buscarPorId(id);
-        if (t.getStatus() != TratamentoStatus.FINALIZADO.toString())
+        if (!TratamentoStatus.FINALIZADO.name().equals(t.getStatus())) {
             throw new ValidacaoException("Só é possível pagar tratamento CONCLUIDO");
+        }
+        if (valorPago == null || valorPago.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ValidacaoException("Valor pago deve ser maior que zero");
+        }
 
+        t.setPagamento(valorPago);
         t.pagar();
         int linhas = tratamentoRepository.registrarPagamento(id, t.getPagamento(), t.getDataPagamento());
         if (linhas == 0) {
@@ -86,6 +92,9 @@ public class TratamentoService {
         }
         if (t.getIdPaciente() == null) {
             throw new ValidacaoException("Paciente é obrigatório");
+        }
+        if (t.getIdConsulta() == null) {
+            throw new ValidacaoException("Consulta é obrigatória");
         }
         try {
             pacienteService.buscarPorId(t.getIdPaciente());
