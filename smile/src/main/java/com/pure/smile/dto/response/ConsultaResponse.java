@@ -4,6 +4,7 @@ import com.pure.smile.enums.ConsultaStatus;
 import lombok.Data;
 import java.time.LocalDateTime;
 
+@Data
 public class ConsultaResponse {
     private Long idConsulta;
     private Long idPaciente;

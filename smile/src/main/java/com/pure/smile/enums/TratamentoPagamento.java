@@ -4,5 +4,4 @@ public enum TratamentoPagamento {
     PENDENTE,
     PAGO,
     PARCIAL
-
 }

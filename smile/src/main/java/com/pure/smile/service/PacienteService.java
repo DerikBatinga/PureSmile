@@ -27,7 +27,7 @@ public class PacienteService {
     }
 
     @Transactional
-    public void criar(PacienteModel p){
+    public void createPaciente(PacienteModel p){
         if (p.getSenha() == null || p.getSenha().isBlank()) {
             throw new ValidacaoException("Uma Senha é obrigatória");
         }
@@ -49,7 +49,7 @@ public class PacienteService {
     }
 
     @Transactional
-    public void atualizar(Long id, PacienteModel p) {
+    public void updatePaciente(Long id, PacienteModel p) {
         PacienteModel atual = buscarPorId(id);
         validar(p);
         p.setIdPaciente(id);
