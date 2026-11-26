@@ -13,6 +13,5 @@ public class PacienteModel extends UserModel {
     private String cpf;
     private String sexo;          // aceita NULL
     private String telefone;      // aceita NULL
-    private Date dataNasc;   // aceita NULL
     private Long idConvenio;      // aceita NULL (paciente sem convênio)
 }

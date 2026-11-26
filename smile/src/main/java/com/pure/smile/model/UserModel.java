@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -20,7 +21,7 @@ public class UserModel { //Não precisar de ser o mesmo nome do bd
      private String senha;
 
      private String email;
-     private Date dataNasc;
+     private LocalDate dataNasc;
      private UsuarioRole role;
      private boolean ativo;
      private LocalDateTime dataCriacao;

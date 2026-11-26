@@ -2,6 +2,8 @@ package com.pure.smile.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,5 +30,7 @@ public class PacienteRequest {
 
     @NotNull(message = "Data de nascimento é obrigatória")
     @Past(message = "Data de nascimento deve ser no passado")
-    private LocalDateTime dataNascimento;
+    private LocalDate dataNascimento;
+
+    private Long idConvenio;   // opcional
 }

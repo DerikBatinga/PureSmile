@@ -1,17 +1,19 @@
 package com.pure.smile.dto.response;
 
-import com.pure.smile.enums.UsuarioRole;
 import lombok.Data;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @Data
 public class PacienteResponse {
+    private Long idPaciente;
     private Long idUsuario;
     private String nomeCompleto;
-    private String cpf;
     private String email;
+    private boolean ativo;
+    private String cpf;
+    private String sexo;
     private String telefone;
-    private LocalDateTime dataNascimento;
-    private boolean status;
-    private UsuarioRole role;
+    private LocalDate dataNascimento;
+    private Long idConvenio;
 }
