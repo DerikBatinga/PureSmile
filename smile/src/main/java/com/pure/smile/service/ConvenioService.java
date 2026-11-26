@@ -41,7 +41,10 @@ public class ConvenioService {
         convenioRepository.updateConvenio(c);
     }
 
-    public void desativar (Long id){convenioRepository.desativar(buscarPorId(id).getIdConvenio());}
+    public void desativar (Long id){
+        convenioRepository.desativar(buscarPorId(id).getIdConvenio());
+    }
+
     public void validar(ConvenioModel c){
         if (c.getCnpj() != null && !c.getCnpj().matches("\\d{14}")) {
             throw new ValidacaoException("CNPJ inválido!, verifique se digitou corretamente");
