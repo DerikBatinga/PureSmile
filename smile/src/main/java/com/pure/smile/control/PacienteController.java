@@ -36,7 +36,7 @@ public class PacienteController {
         return resposta(pacienteService.buscarPorId(id));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePaciente(@PathVariable Long id, @Valid @RequestBody PacienteRequest request){
+    public PacienteResponse updatePaciente(@PathVariable Long id, @Valid @RequestBody PacienteRequest request){
         PacienteModel model = modelo(request);
 
         model.setIdPaciente(id);
