@@ -50,6 +50,7 @@ public class ConsultaService {
         exigirAgendada(atual);
         validar(c, id);                         // ignora a própria consulta no teste de conflito
         c.setIdConsulta(id);
+        c.setStatus(atual.getStatus());
         consultaRepository.updateConsulta(c);
     }
 
